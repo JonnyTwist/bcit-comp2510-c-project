@@ -6,4 +6,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(bcit_comp2510_c_project main.c
         patient.c
         dsm.c
-        ui.c)
+        ui.c
+        patient.h)

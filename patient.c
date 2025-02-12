@@ -2,6 +2,7 @@
 // Created by maxym on 31/01/2025.
 //
 
+#include "patient.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -9,27 +10,7 @@
 #define MIN_ID 0
 #define MIN_ROOM_NUM 0
 
-typedef struct patient_struct
-{
-    int patient_id;
-    char name[100];
-    int age;
-    char diagnosis[100];
-    int room_number;
-} patient;
 
-patient patients[50];
-int patientCount = 0;
-
-int idExists(patient arr[], int size, int id);
-void emptyRemainingInput();
-void addPatient();
-// void dischargePatient(int patient_id);
-void viewAllPatients();
-void searchPatient();
-void searchPatientByID();
-void searchPatientByName();
-// patient searchPatient(const char* patient_name);
 
 /**
  * Clears the remaining input when there is overflow.
@@ -184,6 +165,20 @@ void addPatient() {
 }
 
 /**
+ * Only for test purposes for now
+ *
+ * this function may be used instead of the first addPatient() func
+ * this function may be used in the ui file
+ * and scanf(), printf() may be called only in the ui file
+ * I've also just remembered that it is not possible to overload in c :(
+ * @param patientToAdd
+ */
+void addPatient1(patient patientToAdd) {
+    patients[patientCount] = patientToAdd;
+    patientCount++;
+}
+
+/**
  * Allows the user to view all the patients currently in the database.
  */
 void viewAllPatients() {
@@ -230,9 +225,8 @@ void searchPatientByID() {
     index = idExists(patients, patientCount, id);
 
     if (index != -1) {
-        printf("Patient Found - ID: %d, Name: %s, Age: %d, Room Num: %d, Diagnosis: %s\n",
-            patients[index].patient_id, patients[index].name, patients[index].age,
-            patients[index].room_number, patients[index].diagnosis);
+        printf("Patient Found - ");
+        displayPatient(patients[index]);
     } else {
         printf("Patient not found.\n");
     }
@@ -271,13 +265,18 @@ void searchPatientByName() {
     }
 }
 
+int dischargePatient(int patientID) {
+    int index;
+    index = idExists(patients, patientCount, patientID);
 
+    if (index == -1)
+        return 1;
 
-void main() {
-    //just for testing purposes
-    //todo copy loop from Lab 5 to wherever interface should be
-    addPatient();
-    addPatient();
-    viewAllPatients();
-    searchPatient();
+    for (int i = index; i < patientCount - 1; i++)
+        patients[i] = patients[i + 1];
+
+    patientCount--;
+
+    return 0;
 }
+
