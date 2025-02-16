@@ -1,5 +1,6 @@
 CMakeFiles/bcit_comp2510_c_project.dir/patient.c.obj: \
  C:\Users\jsatw\CLionProjects\TermProject\bcit-comp2510-c-project\patient.c \
+ C:\Users\jsatw\CLionProjects\TermProject\bcit-comp2510-c-project\patient.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/string.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/crtdefs.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \

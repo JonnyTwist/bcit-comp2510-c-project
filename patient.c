@@ -78,29 +78,13 @@ void addPatient() {
     valid = 0;
     while (!valid) {
 
-        //assumes the input is valid right away
-        valid = 1;
-
         printf("Enter the patients name: ");
         fgets(patientName, 100, stdin);
 
-        //ensures the input didnt overflow
-        if (patientName[strlen(patientName) - 1] != '\n') {
-            printf("Name too long! Maximum 99 characters allowed.\n");
-            emptyRemainingInput();
-            //sets valid to false so the loop will start again
-            valid = 0;
-        }
+        valid = validateString(patientName);
 
-        // removes the newline character
-        patientName[strcspn(patientName, "\n")] = 0;
-
-        //Doesnt allow blank names
-        //todo figure out how to check if it is just whitespace and deny those
-        if (strlen(patientName) == 0) {
-            printf("Name cannot be blank!\n");
-            //sets valid to false so the loop will start again
-            valid = 0;
+        if (!valid){
+            printf("Patient name must be between 1 and 100 characters\n");
         }
     }
 
@@ -125,23 +109,10 @@ void addPatient() {
         printf("Enter the patients diagnosis: ");
         fgets(patientDiagnosis, 100, stdin);
 
-        //ensures the input didnt overflow
-        if (patientDiagnosis[strlen(patientDiagnosis) - 1] != '\n') {
-            printf("Diagnosis too long! Maximum 99 characters allowed.\n");
-            emptyRemainingInput();
-            //sets valid to false so the loop will start again
-            valid = 0;
-        }
+        valid = validateString(patientDiagnosis);
 
-        // removes the newline character
-        patientDiagnosis[strcspn(patientDiagnosis, "\n")] = 0;
-
-        //Doesnt allow blank names
-        //todo figure out how to check if it is just whitespace and deny those
-        if (strlen(patientDiagnosis) == 0) {
-            printf("Diagnosis cannot be blank!\n");
-            //sets valid to false so the loop will start again
-            valid = 0;
+        if (!valid){
+            printf("Diagnosis must be between 1 and 100 characters\n");
         }
     }
 
@@ -162,6 +133,30 @@ void addPatient() {
 
     patients[patientCount] = patientToAdd;
     patientCount++;
+}
+
+/**
+ * Validates the patients name and diagnosis since those were similar.
+ * @param string the string to be validated.
+ * @return 0 if it is not valid and 1 if it is valid.
+ */
+int validateString(char string[100]){
+    //ensures the string ends with a newline character / no overflow
+    if (string[strlen(string) - 1] != '\n') {
+        emptyRemainingInput();
+        return 0;
+    }
+
+    // removes the newline character
+    string[strcspn(string, "\n")] = 0;
+
+    //Doesnt allow blank strings
+    //todo figure out how to check if it is just whitespace and deny those
+    if (strlen(string) == 0) {
+        return 0;
+    }
+
+    return 1;
 }
 
 /**

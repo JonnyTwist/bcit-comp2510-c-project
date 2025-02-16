@@ -42,6 +42,48 @@ int main(void) {
     addPatient();
     viewAllPatients();
     searchPatient();*/
+}
 
+void menu(){
+    int choice;
+    do {
+        printf("\nPatient Management System\n");
+        printf("1. Add a New Patient\n");
+        printf("2. View All Patients\n");
+        printf("3. Search Patient by ID\n");
+        printf("4. Discharge Patient\n");
+        printf("5. Manage Doctor Schedule\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        getchar(); //consume newline
 
+        switch (choice) {
+            case 1:
+                addPatient();
+                break;
+            case 2:
+                viewAllPatients();
+                break;
+            case 3:
+                searchPatient();
+                break;
+            case 4:
+                int id;
+                printf("Patient ID to Discharge: ");
+                scanf("%d", &id);
+                dischargePatient(id);
+                break;
+            case 5:
+                //todo connect to dsm
+                //manageDoctors();
+                break;
+            case 6:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("invalid choice! Try again.\n");
+        }
+
+    } while (choice != 6);
 }
