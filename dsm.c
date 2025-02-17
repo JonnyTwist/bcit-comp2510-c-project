@@ -134,8 +134,8 @@ void removeDoctorFromSchedule(int id){
     for (int i = 0; i < DAYS_IN_WEEK; i++){
         for (int j = 0; j < SHIFTS_PER_DAY; j++){
             if (id == schedule[i][j]){
-                //todo I am thinking of setting empty time slots to -1
-                schedule[i][j] = -1;
+                //Empty time slots store a doctor ID of 0
+                schedule[i][j] = 0;
             }
         }
     }
@@ -182,7 +182,7 @@ void addDocToTimeSlot(){
 
     do {
         printf("\nMorning Shift = 0\n");
-        printf("Monday Shift = 1\n");
+        printf("Afternoon Shift = 1\n");
         printf("Evening Shift = 2\n");
         printf("Cancel = -1\n");
 
@@ -202,6 +202,68 @@ void addDocToTimeSlot(){
     schedule[weekDay][shift] = docID;
 }
 
+void printSchedule(){
+    printTableHeader();
+    for (int j = 0; j < SHIFTS_PER_DAY; j++){
+        switch (j){
+            case 0:
+                printf("%-12s", "MORNING");
+                break;
+            case 1:
+                printf("%-12s", "AFTERNOON");
+                break;
+            case 2:
+                printf("%-12s", "EVENING");
+                break;
+            default:
+                //big message to tell me if I messed up
+                printf("HOW DID WE GET HERE!!!!");
+        }
+
+        for (int i = 0; i < DAYS_IN_WEEK; i ++){
+            if (schedule[i][j] == 0){
+                printf("%-15s", "Empty");
+            }
+            else{
+                int index;
+                int id = schedule[i][j];
+                index = docIdExists(doctors, doctorCount, id);
+                char doctorName[100];
+
+                strcpy(doctorName, doctors[index].name);
+                truncateStr(doctorName, 15);
+                printf("%-15s", doctorName);
+            }
+        }
+        printf("\n");
+    }
+
+}
+
+/**
+ * Truncates a string to a specified length.
+ * Used to truncate doctor names that are too long for table display.
+ * @param str the name to be truncated
+ * @param newLength the new length of the String
+ */
+void truncateStr(char str[], int newLength) {
+    if (newLength < strlen(str)) {
+        str[newLength] = '\0';
+    }
+}
+
+void printTableHeader() {
+    printf("%-12s", "");
+    printf("%-15s", "SUNDAY");
+    printf("%-15s", "MONDAY");
+    printf("%-15s", "TUESDAY");
+    printf("%-15s", "WEDNESDAY");
+    printf("%-15s", "THURSDAY");
+    printf("%-15s", "FRIDAY");
+    printf("%-15s", "SATURDAY");
+    printf("\n");
+}
+
 /**
  * Displays a text based menu and takes in user inputer related to
  * the doctor management system.
@@ -215,7 +277,8 @@ void manageDoctorsMenu(){
         printf("3. Remove Doctor\n");
         printf("4. Add Doctor to Time\n");
         printf("5. Clear Time Slot\n");
-        printf("6. Return\n");
+        printf("6. Display Schedule\n");
+        printf("7. Return\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         getchar(); //consume newline
@@ -241,11 +304,14 @@ void manageDoctorsMenu(){
                 //todo allow clearing a time slot
                 break;
             case 6:
+                printSchedule();
+                break;
+            case 7:
                 printf("Returning...\n");
                 break;
             default:
                 printf("invalid choice! Try again.\n");
         }
 
-    } while (choice != 6);
+    } while (choice != 7);
 }

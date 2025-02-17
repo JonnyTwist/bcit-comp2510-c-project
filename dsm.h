@@ -26,5 +26,8 @@ void manageDoctorsMenu();
 void displayDoctors();
 int removeDoctor(int doctorID);
 void addDocToTimeSlot();
+void printSchedule();
+void printTableHeader();
+void truncateStr(char str[], int newLength);
 
 #endif //DSM_H

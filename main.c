@@ -10,6 +10,7 @@ int doctorCount = 0;
 int schedule[7][3];
 void menu();
 
+//todo initialize 2D array to -1
 int main(void) {
 
     menu();
