@@ -32,6 +32,5 @@ void searchPatient();
 void searchPatientByID();
 void searchPatientByName();
 int validateString(char string[100]);
-// patient searchPatient(const char* patient_name);
 
 #endif //PATIENT_H

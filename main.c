@@ -1,13 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "patient.h"
+#include "dsm.h"
 
 int patientCount = 0;
 patient patients[50];
-
+doctor doctors[10];
+int doctorCount = 0;
+int schedule[7][3];
+void menu();
 
 int main(void) {
 
+    menu();
+
+    /*
     for (int i = 0; i < 50; i++) {
         patient patient;
         patient.age = 10;
@@ -34,8 +41,8 @@ int main(void) {
     viewAllPatients();
 
     addPatient();
-
-    viewAllPatients();
+    */
+    // viewAllPatients();
     //just for testing purposes
     //todo copy loop from Lab 5 to wherever interface should be
     /*addPatient();
@@ -75,8 +82,7 @@ void menu(){
                 dischargePatient(id);
                 break;
             case 5:
-                //todo connect to dsm
-                //manageDoctors();
+                manageDoctorsMenu();
                 break;
             case 6:
                 printf("Exiting...\n");

@@ -1,5 +1,6 @@
 CMakeFiles/bcit_comp2510_c_project.dir/dsm.c.obj: \
  C:\Users\jsatw\CLionProjects\TermProject\bcit-comp2510-c-project\dsm.c \
+ C:\Users\jsatw\CLionProjects\TermProject\bcit-comp2510-c-project\dsm.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \

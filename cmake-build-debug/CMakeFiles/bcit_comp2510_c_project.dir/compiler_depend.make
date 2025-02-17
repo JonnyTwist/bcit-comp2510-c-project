@@ -15,7 +15,8 @@ CMakeFiles/bcit_comp2510_c_project.dir/dsm.c.obj: C:/Users/jsatw/CLionProjects/T
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/string.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl \
-  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/vadefs.h
+  C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
+  C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/dsm.h
 
 CMakeFiles/bcit_comp2510_c_project.dir/main.c.obj: C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/main.c \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/limits.h \
@@ -39,6 +40,7 @@ CMakeFiles/bcit_comp2510_c_project.dir/main.c.obj: C:/Users/jsatw/CLionProjects/
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/stdlib.h \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
+  C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/dsm.h \
   C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/patient.h
 
 CMakeFiles/bcit_comp2510_c_project.dir/patient.c.obj: C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/patient.c \
@@ -117,6 +119,10 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/inclu
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl:
 
+C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/patient.c:
+
+C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/dsm.h:
+
 C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/main.c:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/limits.h:
@@ -134,7 +140,5 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/inclu
 C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/limits.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.1.1/bin/mingw/x86_64-w64-mingw32/include/malloc.h:
-
-C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/patient.c:
 
 C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/ui.c:

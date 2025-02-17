@@ -177,6 +177,12 @@ void addPatient1(patient patientToAdd) {
  * Allows the user to view all the patients currently in the database.
  */
 void viewAllPatients() {
+
+    if (patientCount == 0){
+        printf("There are no Patients!\n");
+        return;
+    }
+
     printf("\nAll patient details:\n");
     printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
     for (int i = 0; i < patientCount; i++) {
