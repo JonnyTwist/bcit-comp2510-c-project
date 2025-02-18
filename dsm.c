@@ -2,6 +2,7 @@
 // Created by maxym on 31/01/2025.
 //
 
+#include "patient.h"
 #include "dsm.h"
 #include <stdio.h>
 #include <string.h>
@@ -79,8 +80,19 @@ void addDoc(){
             //sets valid to false so the loop will start again
             valid = 0;
         }
+
+        char* cpy = doctorName;
+        int onlyWhiteSpaces = 1;
+        while (*cpy && onlyWhiteSpaces)
+        {
+            onlyWhiteSpaces = *cpy == ' ';
+            cpy++;
+        }
+        if (onlyWhiteSpaces)
+            valid = 0;
     }
 
+    stringTrim(doctorName);
     doctorToAdd.doctor_id = doctorID;
     strcpy(doctorToAdd.name, doctorName);
 
@@ -263,6 +275,55 @@ void printTableHeader() {
     printf("%-15s", "SATURDAY");
     printf("\n");
 }
+void clearTimeSlot()
+{
+    int weekDay;
+    int shift;
+
+    do {
+        printf("\nSunday = 0\n");
+        printf("Monday = 1\n");
+        printf("Tuesday = 2\n");
+        printf("Wednesday = 3\n");
+        printf("Thursday = 4\n");
+        printf("Friday = 5\n");
+        printf("Saturday = 6\n");
+        printf("Cancel = -1\n");
+        printf("Enter day of the week to clear: ");
+        scanf("%d", &weekDay);
+
+        if (weekDay == -1){
+            printf("Canceling...");
+            return;
+        }
+
+        if (weekDay < 0 || weekDay > 6){
+            printf("Invalid week day. Try again.");
+        }
+
+    } while (weekDay < 0 || weekDay > 6);
+
+    do {
+        printf("\nMorning Shift = 0\n");
+        printf("Monday Shift = 1\n");
+        printf("Evening Shift = 2\n");
+        printf("Cancel = -1\n");
+
+        printf("Enter day of the week to clear: ");
+        scanf("%d", &shift);
+
+        if (shift == -1){
+            printf("Canceling...");
+            return;
+        }
+
+        if (shift < 0 || shift > 2){
+            printf("Invalid Shift. Try again.\n");
+        }
+    } while (shift < 0 || shift > 2);
+
+    schedule[weekDay][shift] = 0;
+}
 
 /**
  * Displays a text based menu and takes in user inputer related to
@@ -302,6 +363,7 @@ void manageDoctorsMenu(){
                 break;
             case 5:
                 //todo allow clearing a time slot
+                clearTimeSlot();
                 break;
             case 6:
                 printSchedule();

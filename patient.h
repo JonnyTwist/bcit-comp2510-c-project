@@ -32,5 +32,6 @@ void searchPatient();
 void searchPatientByID();
 void searchPatientByName();
 int validateString(char string[100]);
+void stringTrim(char* string);
 
 #endif //PATIENT_H

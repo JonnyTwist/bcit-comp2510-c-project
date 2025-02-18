@@ -12,7 +12,6 @@ void menu();
 
 //todo initialize 2D array to -1
 int main(void) {
-
     menu();
 
     /*

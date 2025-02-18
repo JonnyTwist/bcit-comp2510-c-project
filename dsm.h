@@ -29,5 +29,6 @@ void addDocToTimeSlot();
 void printSchedule();
 void printTableHeader();
 void truncateStr(char str[], int newLength);
+void clearTimeSlot();
 
 #endif //DSM_H

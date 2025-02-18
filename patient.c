@@ -136,6 +136,32 @@ void addPatient() {
 }
 
 /**
+ * Removes useless spaces of a string
+ * @param string the string to be trimmed
+ */
+void stringTrim(char* string)
+{
+    char* end = string;
+
+    //removes the left spaces
+    char* cpy = string;
+    while (*cpy == ' ')
+        cpy++;
+    while (*cpy)
+    {
+        *string = *cpy;
+        cpy++;
+        string++;
+    }
+    *string = 0;
+
+    //removes the right spaces
+    end += strlen(end) - 1;
+    while (*end == ' ')
+        end--;
+    *(end+1) = 0;
+}
+/**
  * Validates the patients name and diagnosis since those were similar.
  * @param string the string to be validated.
  * @return 0 if it is not valid and 1 if it is valid.
@@ -151,10 +177,22 @@ int validateString(char string[100]){
     string[strcspn(string, "\n")] = 0;
 
     //Doesnt allow blank strings
-    //todo figure out how to check if it is just whitespace and deny those
-    if (strlen(string) == 0) {
+    if (*string == 0) { //return true if the length == 0, false if not
         return 0;
     }
+
+    //Checks if a string only has white spaces
+    char* cpy = string;
+    int onlyWhiteSpaces = 1;
+    while (*cpy && onlyWhiteSpaces)
+    {
+        onlyWhiteSpaces = *cpy == ' ';
+        cpy++;
+    }
+    if (onlyWhiteSpaces)
+        return 0;
+
+    stringTrim(string);
 
     return 1;
 }
