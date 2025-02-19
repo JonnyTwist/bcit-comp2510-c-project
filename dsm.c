@@ -7,7 +7,13 @@
 #include <stdio.h>
 #include <string.h>
 
-//todo this may conflict with patient.c similar method (diff arr)
+/**
+ * Searches through an array of doctors to see if a doctor with a specified ID exists.
+ * @param arr the array of doctors.
+ * @param size the size of the array.
+ * @param id the ID we are looking for.
+ * @return the index of the found ID, else -1
+ */
 int docIdExists(doctor arr[], int size, int id) {
     for (int i = 0; i < size; i++) {
         if (arr[i].doctor_id == id) {
@@ -15,15 +21,6 @@ int docIdExists(doctor arr[], int size, int id) {
         }
     }
     return -1;
-}
-
-//todo this may conflict with patient.c same method
-// maybe find way to merge function with other function
-void docEmptyRemainingInput() {
-    int c = '0';
-    while (c != '\n') {
-        c = getchar();
-    }
 }
 
 /**
@@ -65,7 +62,7 @@ void addDoc(){
         //ensures the input didnt overflow
         if (doctorName[strlen(doctorName) - 1] != '\n') {
             printf("Name too long! Maximum 99 characters allowed.\n");
-            docEmptyRemainingInput();
+            emptyRemainingInput();
             //sets valid to false so the loop will start again
             valid = 0;
         }
@@ -74,22 +71,24 @@ void addDoc(){
         doctorName[strcspn(doctorName, "\n")] = 0;
 
         //Doesnt allow blank names
-        //todo figure out how to check if it is just whitespace and deny those
-        if (strlen(doctorName) == 0) {
+        char* cpy = doctorName;
+        stringTrim(cpy);
+        if (strlen(cpy) == 0) {
             printf("Name cannot be blank!\n");
             //sets valid to false so the loop will start again
             valid = 0;
         }
 
-        char* cpy = doctorName;
-        int onlyWhiteSpaces = 1;
-        while (*cpy && onlyWhiteSpaces)
-        {
-            onlyWhiteSpaces = *cpy == ' ';
-            cpy++;
-        }
-        if (onlyWhiteSpaces)
-            valid = 0;
+        //todo look if code above properly replaces this
+        // char* cpy = doctorName;
+        // int onlyWhiteSpaces = 1;
+        // while (*cpy && onlyWhiteSpaces)
+        // {
+        //     onlyWhiteSpaces = *cpy == ' ';
+        //     cpy++;
+        // }
+        // if (onlyWhiteSpaces)
+        //     valid = 0;
     }
 
     stringTrim(doctorName);
@@ -214,6 +213,9 @@ void addDocToTimeSlot(){
     schedule[weekDay][shift] = docID;
 }
 
+/**
+ * Prints the doctors schedule for the week.
+ */
 void printSchedule(){
     printTableHeader();
     for (int j = 0; j < SHIFTS_PER_DAY; j++){
@@ -243,7 +245,7 @@ void printSchedule(){
                 char doctorName[100];
 
                 strcpy(doctorName, doctors[index].name);
-                truncateStr(doctorName, 15);
+                truncateStr(doctorName, TABLE_FORMATTED_LENGTH);
                 printf("%-15s", doctorName);
             }
         }
@@ -260,10 +262,16 @@ void printSchedule(){
  */
 void truncateStr(char str[], int newLength) {
     if (newLength < strlen(str)) {
-        str[newLength] = '\0';
+        str[newLength ] = '\0';
+        str[newLength -1] = '.';
+        str[newLength -2] = '.';
+        str[newLength -3] = '.';
     }
 }
 
+/**
+ * Prints the header of the doctors schedule table.
+ */
 void printTableHeader() {
     printf("%-12s", "");
     printf("%-15s", "SUNDAY");
@@ -275,6 +283,10 @@ void printTableHeader() {
     printf("%-15s", "SATURDAY");
     printf("\n");
 }
+
+/**
+ * Clears a specified time slot of the schedule.
+ */
 void clearTimeSlot()
 {
     int weekDay;
@@ -305,7 +317,7 @@ void clearTimeSlot()
 
     do {
         printf("\nMorning Shift = 0\n");
-        printf("Monday Shift = 1\n");
+        printf("Afternoon Shift = 1\n");
         printf("Evening Shift = 2\n");
         printf("Cancel = -1\n");
 
@@ -362,7 +374,6 @@ void manageDoctorsMenu(){
                 addDocToTimeSlot();
                 break;
             case 5:
-                //todo allow clearing a time slot
                 clearTimeSlot();
                 break;
             case 6:

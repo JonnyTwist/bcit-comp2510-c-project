@@ -97,9 +97,6 @@ void addPatient() {
         }
     }
 
-    //todo I changed the diagnosis to a set length character array so I could continue with
-    // other methods. It might be better as a pointer but since I haven't learned those yet idk
-    // how to implement that :)
     valid = 0;
     while (!valid) {
 

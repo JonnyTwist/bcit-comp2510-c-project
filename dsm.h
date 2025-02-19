@@ -8,6 +8,7 @@
 #define MIN_ID 0
 #define DAYS_IN_WEEK 7
 #define SHIFTS_PER_DAY 3
+#define TABLE_FORMATTED_LENGTH 13
 
 typedef struct doctor_struct
 {
@@ -20,7 +21,6 @@ extern int doctorCount;
 extern int schedule[DAYS_IN_WEEK][SHIFTS_PER_DAY];
 
 int docIdExists(doctor arr[], int size, int id);
-void docEmptyRemainingInput();
 void addDoc();
 void manageDoctorsMenu();
 void displayDoctors();
