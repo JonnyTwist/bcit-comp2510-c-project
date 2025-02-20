@@ -57,7 +57,7 @@ void menu(){
         printf("\nPatient Management System\n");
         printf("1. Add a New Patient\n");
         printf("2. View All Patients\n");
-        printf("3. Search Patient by ID\n");
+        printf("3. Search For Patient\n");
         printf("4. Discharge Patient\n");
         printf("5. Manage Doctor Schedule\n");
         printf("6. Exit\n");
