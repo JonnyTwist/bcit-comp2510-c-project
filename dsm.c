@@ -34,33 +34,53 @@ void addDoc(){
     }
 
     doctor doctorToAdd;
-    int valid;
     int doctorID;
     char doctorName[100];
 
-    valid = 0;
+    enterDocId(&doctorID);
+    enterDocName(doctorName);
+
+    doctorToAdd.doctor_id = doctorID;
+    strcpy(doctorToAdd.name, doctorName);
+
+    doctors[doctorCount] = doctorToAdd;
+    doctorCount++;
+}
+/**
+ * Store the doctor's id
+ * @param id
+ */
+void enterDocId(int* id)
+{
+    int valid = 0;
     while (!valid) {
         printf("Enter the doctor's ID: ");
-        scanf("%d", &doctorID);
+        scanf("%d", id);
         getchar();
-        if (doctorID > MIN_ID && docIdExists(doctors, doctorCount, doctorID) == -1) {
+        if (*id > MIN_ID && docIdExists(doctors, doctorCount, *id) == -1) {
             valid = 1;
         } else {
             printf("Invalid or duplicate ID!\n");
         }
     }
-
-    valid = 0;
+}
+/**
+ * Store the doctor's name
+ * @param name
+ */
+void enterDocName(char* name)
+{
+    int valid = 0;
     while (!valid) {
 
         //assumes the input is valid right away
         valid = 1;
 
         printf("Enter the doctor's name: ");
-        fgets(doctorName, 100, stdin);
+        fgets(name, 100, stdin);
 
         //ensures the input didnt overflow
-        if (doctorName[strlen(doctorName) - 1] != '\n') {
+        if (name[strlen(name) - 1] != '\n') {
             printf("Name too long! Maximum 99 characters allowed.\n");
             emptyRemainingInput();
             //sets valid to false so the loop will start again
@@ -68,35 +88,17 @@ void addDoc(){
         }
 
         // removes the newline character
-        doctorName[strcspn(doctorName, "\n")] = 0;
+        name[strcspn(name, "\n")] = 0;
 
         //Doesnt allow blank names
-        char* cpy = doctorName;
-        stringTrim(cpy);
-        if (strlen(cpy) == 0) {
+        stringTrim(name);
+        if (strlen(name) == 0) {
             printf("Name cannot be blank!\n");
             //sets valid to false so the loop will start again
             valid = 0;
         }
-
-        //todo look if code above properly replaces this
-        // char* cpy = doctorName;
-        // int onlyWhiteSpaces = 1;
-        // while (*cpy && onlyWhiteSpaces)
-        // {
-        //     onlyWhiteSpaces = *cpy == ' ';
-        //     cpy++;
-        // }
-        // if (onlyWhiteSpaces)
-        //     valid = 0;
     }
 
-    stringTrim(doctorName);
-    doctorToAdd.doctor_id = doctorID;
-    strcpy(doctorToAdd.name, doctorName);
-
-    doctors[doctorCount] = doctorToAdd;
-    doctorCount++;
 }
 
 /**

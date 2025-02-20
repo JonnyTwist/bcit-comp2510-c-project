@@ -22,6 +22,8 @@ extern int schedule[DAYS_IN_WEEK][SHIFTS_PER_DAY];
 
 int docIdExists(doctor arr[], int size, int id);
 void addDoc();
+void enterDocId(int* id);
+void enterDocName(char* name);
 void manageDoctorsMenu();
 void displayDoctors();
 int removeDoctor(int doctorID);

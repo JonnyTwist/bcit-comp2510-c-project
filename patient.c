@@ -58,69 +58,15 @@ void addPatient() {
     int patientAge = -10;
     char patientDiagnosis[100];
     int patientRoomNumber = -10;
-    int valid;
 
     printf("\n");
 
     //todo add a sentinel value(s)  that allows users to quit at any point
-    valid = 0;
-    while (!valid) {
-        printf("Enter the patient ID: ");
-        scanf("%d", &patientID);
-        getchar();
-        if (patientID > MIN_ID && idExists(patients, patientCount, patientID) == -1) {
-            valid = 1;
-        } else {
-            printf("Invalid or duplicate ID!\n");
-        }
-    }
-
-    valid = 0;
-    while (!valid) {
-
-        printf("Enter the patients name: ");
-        fgets(patientName, 100, stdin);
-
-        valid = validateString(patientName);
-
-        if (!valid){
-            printf("Patient name must be between 1 and 100 characters\n");
-        }
-    }
-
-    while (patientAge < MIN_AGE) {
-        printf("Enter the patients age: ");
-        scanf("%d", &patientAge);
-        getchar();
-        if (patientAge < MIN_AGE) {
-            printf("Patient age must not be negative!\n");
-        }
-    }
-
-    valid = 0;
-    while (!valid) {
-
-        //assumes the input is valid right away
-        valid = 1;
-
-        printf("Enter the patients diagnosis: ");
-        fgets(patientDiagnosis, 100, stdin);
-
-        valid = validateString(patientDiagnosis);
-
-        if (!valid){
-            printf("Diagnosis must be between 1 and 100 characters\n");
-        }
-    }
-
-    while (patientRoomNumber < MIN_ROOM_NUM) {
-        printf("Enter the patients room number: ");
-        scanf("%d", &patientRoomNumber);
-        getchar();
-        if (patientRoomNumber < MIN_ROOM_NUM) {
-            printf("Room number must not be negative!\n");
-        }
-    }
+    enterPatientId(&patientID);
+    enterPatientName(patientName);
+    enterPatientAge(&patientAge);
+    enterPatientDiagnosis(patientDiagnosis);
+    enterPatientRoom(&patientRoomNumber);
 
     patientToAdd.patient_id = patientID;
     strcpy(patientToAdd.name, patientName);
@@ -130,6 +76,98 @@ void addPatient() {
 
     patients[patientCount] = patientToAdd;
     patientCount++;
+}
+
+/**
+ * Stores the patient's id
+ * @param id where the patient's id will be stored
+ */
+void enterPatientId(int* id)
+{
+    int valid = 0;
+    while (!valid) {
+        printf("Enter the patient ID: ");
+        scanf("%d", id);
+        getchar();
+        if (*id > MIN_ID && idExists(patients, patientCount, *id) == -1) {
+            valid = 1;
+        } else {
+            printf("Invalid or duplicate ID!\n");
+        }
+    }
+}
+/**
+ * Store the patient's id
+ * @param name where the patient's id will be stored
+ */
+void enterPatientName(char* name)
+{
+    int valid = 0;
+    while (!valid) {
+
+        printf("Enter the patients name: ");
+        fgets(name, 100, stdin);
+
+        valid = validateString(name);
+
+        if (!valid){
+            printf("Patient name must be between 1 and 100 characters\n");
+        }
+    }
+}
+/**
+ * Store the patient's name
+ * @param age where the patient's age will be stored
+ */
+void enterPatientAge(int* age)
+{
+    do {
+        printf("Enter the patients age: ");
+        scanf("%d", age);
+        getchar();
+        if (*age < MIN_AGE) {
+            printf("Patient age must not be negative!\n");
+        }
+    }
+    while (*age < MIN_AGE);
+}
+/**
+ * Store the patient's age
+ * @param diagnosis where the patient's age will be stored
+ */
+void enterPatientDiagnosis(char* diagnosis)
+{
+    int valid = 0;
+    while (!valid) {
+
+        //assumes the input is valid right away
+        valid = 1;
+
+        printf("Enter the patients diagnosis: ");
+        fgets(diagnosis, 100, stdin);
+
+        valid = validateString(diagnosis);
+
+        if (!valid){
+            printf("Diagnosis must be between 1 and 100 characters\n");
+        }
+    }
+}
+/**
+ * Store the room number
+ * @param roomNumber where the room number will be stored
+ */
+void enterPatientRoom(int* roomNumber)
+{
+    do {
+        printf("Enter the patients room number: ");
+        scanf("%d", roomNumber);
+        getchar();
+        if (*roomNumber < MIN_ROOM_NUM) {
+            printf("Room number must not be negative!\n");
+        }
+    }
+    while (*roomNumber < MIN_ROOM_NUM);
 }
 
 /**
@@ -179,17 +217,10 @@ int validateString(char string[100]){
     }
 
     //Checks if a string only has white spaces
-    char* cpy = string;
-    int onlyWhiteSpaces = 1;
-    while (*cpy && onlyWhiteSpaces)
-    {
-        onlyWhiteSpaces = *cpy == ' ';
-        cpy++;
-    }
-    if (onlyWhiteSpaces)
-        return 0;
-
     stringTrim(string);
+    if (strlen(string) == 0) {
+        return 0;
+    }
 
     return 1;
 }
@@ -301,6 +332,11 @@ void searchPatientByName() {
     }
 }
 
+/**
+ *
+ * @param patientID
+ * @return returns 0 if the patient has been discharged successfully, else 1
+ * */
 int dischargePatient(int patientID) {
     int index;
     index = idExists(patients, patientCount, patientID);
