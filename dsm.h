@@ -9,6 +9,8 @@
 #define DAYS_IN_WEEK 7
 #define SHIFTS_PER_DAY 3
 #define TABLE_FORMATTED_LENGTH 13
+#define MAX_STRING_LENGTH 100
+#define ID_NOT_FOUND (-1)
 
 typedef struct doctor_struct
 {

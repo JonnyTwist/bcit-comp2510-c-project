@@ -9,8 +9,8 @@
 #define MIN_AGE 0
 #define MIN_ID 0
 #define MIN_ROOM_NUM 0
-
-
+#define MAX_STRING_LENGTH 100
+#define ID_NOT_FOUND (-1)
 
 /**
  * Clears the remaining input when there is overflow.
@@ -35,7 +35,7 @@ int idExists(patient arr[], int size, int id) {
             return i;
         }
     }
-    return -1;
+    return ID_NOT_FOUND;
 }
 
 /**
@@ -45,8 +45,6 @@ int idExists(patient arr[], int size, int id) {
  */
 void addPatient() {
 
-    //todo make sure all verifications were successfully found and implemented
-
     if (patientCount >= 50) {
         printf("Maximum number of patients reached!\n");
         return;
@@ -54,9 +52,9 @@ void addPatient() {
 
     patient patientToAdd;
     int patientID = -10;
-    char patientName[100];
+    char patientName[MAX_STRING_LENGTH];
     int patientAge = -10;
-    char patientDiagnosis[100];
+    char patientDiagnosis[MAX_STRING_LENGTH];
     int patientRoomNumber = -10;
 
     printf("\n");
@@ -89,7 +87,7 @@ void enterPatientId(int* id)
         printf("Enter the patient ID: ");
         scanf("%d", id);
         getchar();
-        if (*id > MIN_ID && idExists(patients, patientCount, *id) == -1) {
+        if (*id > MIN_ID && idExists(patients, patientCount, *id) == ID_NOT_FOUND) {
             valid = 1;
         } else {
             printf("Invalid or duplicate ID!\n");
@@ -106,12 +104,12 @@ void enterPatientName(char* name)
     while (!valid) {
 
         printf("Enter the patients name: ");
-        fgets(name, 100, stdin);
+        fgets(name, MAX_STRING_LENGTH, stdin);
 
         valid = validateString(name);
 
         if (!valid){
-            printf("Patient name must be between 1 and 100 characters\n");
+            printf("Patient name must be less than %d characters and not blank\n", MAX_STRING_LENGTH);
         }
     }
 }
@@ -126,7 +124,7 @@ void enterPatientAge(int* age)
         scanf("%d", age);
         getchar();
         if (*age < MIN_AGE) {
-            printf("Patient age must not be negative!\n");
+            printf("Patient age must be an int and not be negative!\n");
         }
     }
     while (*age < MIN_AGE);
@@ -144,12 +142,12 @@ void enterPatientDiagnosis(char* diagnosis)
         valid = 1;
 
         printf("Enter the patients diagnosis: ");
-        fgets(diagnosis, 100, stdin);
+        fgets(diagnosis, MAX_STRING_LENGTH, stdin);
 
         valid = validateString(diagnosis);
 
         if (!valid){
-            printf("Diagnosis must be between 1 and 100 characters\n");
+            printf("Diagnosis must be less than %d characters and not blank\n", MAX_STRING_LENGTH);
         }
     }
 }
@@ -164,7 +162,7 @@ void enterPatientRoom(int* roomNumber)
         scanf("%d", roomNumber);
         getchar();
         if (*roomNumber < MIN_ROOM_NUM) {
-            printf("Room number must not be negative!\n");
+            printf("Room number must an int and not be negative!\n");
         }
     }
     while (*roomNumber < MIN_ROOM_NUM);
@@ -201,7 +199,7 @@ void stringTrim(char* string)
  * @param string the string to be validated.
  * @return 0 if it is not valid and 1 if it is valid.
  */
-int validateString(char string[100]){
+int validateString(char string[MAX_STRING_LENGTH]){
     //ensures the string ends with a newline character / no overflow
     if (string[strlen(string) - 1] != '\n') {
         emptyRemainingInput();
@@ -223,20 +221,6 @@ int validateString(char string[100]){
     }
 
     return 1;
-}
-
-/**
- * Only for test purposes for now
- *
- * this function may be used instead of the first addPatient() func
- * this function may be used in the ui file
- * and scanf(), printf() may be called only in the ui file
- * I've also just remembered that it is not possible to overload in c :(
- * @param patientToAdd
- */
-void addPatient1(patient patientToAdd) {
-    patients[patientCount] = patientToAdd;
-    patientCount++;
 }
 
 /**
@@ -291,7 +275,7 @@ void searchPatientByID() {
 
     index = idExists(patients, patientCount, id);
 
-    if (index != -1) {
+    if (index != ID_NOT_FOUND) {
         printf("Patient Found - ");
         displayPatient(patients[index]);
     } else {
@@ -303,11 +287,11 @@ void searchPatientByID() {
  * Allows users to search for patients by the patients name.
  */
 void searchPatientByName() {
-    char name[100];
-    int index = -1;
+    char name[MAX_STRING_LENGTH];
+    int index = ID_NOT_FOUND;
 
     printf("Enter the patients name: ");
-    fgets(name, 100, stdin);
+    fgets(name, MAX_STRING_LENGTH, stdin);
 
     //If the name is too long we will deny the search and empty the buffer.
     if (name[strlen(name) - 1] != '\n') {
@@ -326,7 +310,7 @@ void searchPatientByName() {
                 index = i;
             }
         }
-        if (index == -1) {
+        if (index == ID_NOT_FOUND) {
             printf("Patient not found.\n");
         }
     }
@@ -341,7 +325,7 @@ int dischargePatient(int patientID) {
     int index;
     index = idExists(patients, patientCount, patientID);
 
-    if (index == -1)
+    if (index == ID_NOT_FOUND)
         return 1;
 
     for (int i = index; i < patientCount - 1; i++)

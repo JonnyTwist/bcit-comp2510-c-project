@@ -8,6 +8,8 @@
 #define MIN_AGE 0
 #define MIN_ID 0
 #define MIN_ROOM_NUM 0
+#define MAX_STRING_LENGTH 100
+#define ID_NOT_FOUND (-1)
 
 typedef struct patient_struct
 {
