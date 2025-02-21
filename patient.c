@@ -1,16 +1,13 @@
-// Patient
-// Created by maxym on 31/01/2025.
-//
+/**
+ * Gives function to patient management.
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
 
 #include "patient.h"
 #include <string.h>
 #include <stdio.h>
-
-#define MIN_AGE 0
-#define MIN_ID 0
-#define MIN_ROOM_NUM 0
-#define MAX_STRING_LENGTH 100
-#define ID_NOT_FOUND (-1)
 
 /**
  * Clears the remaining input when there is overflow.
@@ -59,7 +56,6 @@ void addPatient() {
 
     printf("\n");
 
-    //todo add a sentinel value(s)  that allows users to quit at any point
     enterPatientId(&patientID);
     enterPatientName(patientName);
     enterPatientAge(&patientAge);
@@ -303,9 +299,11 @@ void searchPatientByName() {
         name[strcspn(name, "\n")] = 0;
         for (int i = 0; i < patientCount; i++) {
             if (strcmp(patients[i].name, name) == 0) {
-                printf("Patient Found - ID: %d, Name: %s, Age: %d, Room Num: %d, Diagnosis: %s\n",
-                       patients[i].patient_id, patients[i].name, patients[i].age,
-                       patients[i].room_number, patients[i].diagnosis);
+                printf("Patient Found - ");
+                       // "ID: %d, Name: %s, Age: %d, Room Num: %d, Diagnosis: %s\n",
+                       // patients[i].patient_id, patients[i].name, patients[i].age,
+                       // patients[i].room_number, patients[i].diagnosis);
+                displayPatient(patients[i]);
                 //just to make sure it doesn't say no patient found
                 index = i;
             }
@@ -335,4 +333,15 @@ int dischargePatient(int patientID) {
 
     return 0;
 }
+
+/**
+ * Displays a patients details
+ * @param patient the patient to be displayed.
+ */
+void displayPatient(patient patient) {
+    printf("ID: %d\t Name: %s\t Age: %d\t Room Num: %d\t Diagnosis: %s\n",
+            patient.patient_id, patient.name, patient.age,
+            patient.room_number, patient.diagnosis);
+}
+
 

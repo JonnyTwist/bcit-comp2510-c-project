@@ -200,30 +200,6 @@ patient.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/patient.c.s
 .PHONY : patient.c.s
 
-ui.obj: ui.c.obj
-.PHONY : ui.obj
-
-# target to build an object file
-ui.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/ui.c.obj
-.PHONY : ui.c.obj
-
-ui.i: ui.c.i
-.PHONY : ui.i
-
-# target to preprocess a source file
-ui.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/ui.c.i
-.PHONY : ui.c.i
-
-ui.s: ui.c.s
-.PHONY : ui.s
-
-# target to generate assembly for a file
-ui.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/ui.c.s
-.PHONY : ui.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -242,9 +218,6 @@ help:
 	@echo ... patient.obj
 	@echo ... patient.i
 	@echo ... patient.s
-	@echo ... ui.obj
-	@echo ... ui.i
-	@echo ... ui.s
 .PHONY : help
 
 

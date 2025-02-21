@@ -1,6 +1,9 @@
-//
-// Created by jsatw on 2025-02-16.
-//
+/**
+* Allows using the dsm.c file from other files
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
 
 #ifndef DSM_H
 #define DSM_H

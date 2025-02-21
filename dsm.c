@@ -1,6 +1,9 @@
-// Doctor schedule management(dsm)
-// Created by maxym on 31/01/2025.
-//
+/**
+* Gives function to the doctor management system.
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
 
 #include "patient.h"
 #include "dsm.h"

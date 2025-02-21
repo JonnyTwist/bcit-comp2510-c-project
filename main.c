@@ -1,8 +1,18 @@
+/**
+* Starting point of interacting with the hospital management system.
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "patient.h"
 #include "dsm.h"
 
+/**
+ *
+ */
 int patientCount = 0;
 patient patients[50];
 doctor doctors[10];
@@ -10,10 +20,20 @@ int doctorCount = 0;
 int schedule[7][3];
 void menu();
 
+/**
+ * Drives the program.
+ * @return 0
+ */
 int main(void) {
     menu();
+
+    return 0;
 }
 
+/**
+ * An interface for interacting with the patient.c
+ * file or calling the dsm.
+ */
 void menu(){
     int choice;
     do {

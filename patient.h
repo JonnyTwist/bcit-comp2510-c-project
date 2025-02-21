@@ -1,6 +1,9 @@
-//
-// Created by maxym on 11/02/2025.
-//
+/**
+* Allows using the patient.c file from other files
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
 
 #ifndef PATIENT_H
 #define PATIENT_H
