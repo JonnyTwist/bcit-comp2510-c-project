@@ -7,4 +7,8 @@ add_executable(bcit_comp2510_c_project main.c
         patient.c
         dsm.c
         patient.h
-        dsm.h)
+        dsm.h
+        list.h
+        list.c
+        test.c
+        test.h)

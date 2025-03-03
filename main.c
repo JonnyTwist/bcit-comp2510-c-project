@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include "test.h"
 #include "patient.h"
 #include "dsm.h"
 
@@ -25,8 +25,8 @@ void menu();
  * @return 0
  */
 int main(void) {
-    menu();
-
+    //menu();
+    test();
     return 0;
 }
 
