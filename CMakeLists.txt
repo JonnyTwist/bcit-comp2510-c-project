@@ -11,4 +11,7 @@ add_executable(bcit_comp2510_c_project main.c
         list.h
         list.c
         test.c
-        test.h)
+        test.h
+        file_m.h
+        file_m.c
+)
