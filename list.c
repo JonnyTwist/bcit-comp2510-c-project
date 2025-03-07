@@ -137,3 +137,14 @@ int list_print(struct list* list)
     printf(" }\n");
     return 0;
 }
+
+size_t list_length(struct list* list)
+{
+    size_t res = 0;
+    while(list)
+    {
+        list = list->next;
+        res++;
+    }
+    return res;
+}

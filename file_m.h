@@ -3,9 +3,9 @@
 #define BCIT_COMP2510_C_PROJECT_FILE_M_H
 
 int savePatientsInfo(const char* filename, struct list* patients);
-int saveDsmInfo(const char* filename, struct list* doctors, int** schedule);
-int loadPatientsInfo(const char* filename, struct list* patients, int *patientCount);
-int loadDsmInfo(const char* filename, struct list* doctors, int** schedule, int *doctorCount);
+int saveDsmInfo(const char* filename, struct list* doctors);
+int loadPatientsInfo(const char* filename, struct list** patients);
+int loadDsmInfo(const char* filename, struct list* doctors);
 int refreshBackup();
 int restoreBackup();
 int displayFiles();
