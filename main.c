@@ -9,12 +9,19 @@
 #include "test.h"
 #include "patient.h"
 #include "dsm.h"
+#include "list.h"
+
+//todo remove
+#include <time.h>
 
 /**
  *
  */
 int patientCount = 0;
-patient patients[50];
+//patient patients[50];
+struct list* patientList;
+struct list* dischargedPatientList;
+
 doctor doctors[10];
 int doctorCount = 0;
 int schedule[7][3];
@@ -25,9 +32,9 @@ void menu();
  * @return 0
  */
 int main(void) {
-    //menu();
+    menu();
     //test();
-    test2();
+    //test2();
     return 0;
 }
 

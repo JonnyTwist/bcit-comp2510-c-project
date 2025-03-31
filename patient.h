@@ -8,6 +8,8 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
+#include <time.h>
+
 #define MIN_AGE 0
 #define MIN_ID 0
 #define MIN_ROOM_NUM 0
@@ -21,10 +23,14 @@ typedef struct patient_struct
     int age;
     char diagnosis[100];
     int room_number;
+    struct tm* date_admitted;
+    struct tm* date_discharged;
 } patient;
 
-extern patient patients[50];
+//extern patient patients[50];
 extern int patientCount;
+extern struct list* patientList;
+extern struct list* dischargedPatientList;
 
 int idExists(patient arr[], int size, int id);
 int dischargePatient(int patient_id);
@@ -36,12 +42,12 @@ void enterPatientName(char* name);
 void enterPatientAge(int* age);
 void enterPatientDiagnosis(char* diagnosis);
 void enterPatientRoom(int* roomNumber);
-void addPatient1(patient patientToAdd);
 void viewAllPatients();
 void searchPatient();
 void searchPatientByID();
 void searchPatientByName();
 void stringTrim(char* string);
 int validateString(char string[100]);
+struct tm* getCurrentTime();
 
 #endif //PATIENT_H

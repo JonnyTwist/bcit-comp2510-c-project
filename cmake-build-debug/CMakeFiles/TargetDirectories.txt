@@ -1,3 +1,3 @@
-C:/Users/maxym/OneDrive/Documents/GitHub/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/bcit_comp2510_c_project.dir
-C:/Users/maxym/OneDrive/Documents/GitHub/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/maxym/OneDrive/Documents/GitHub/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/bcit_comp2510_c_project.dir
+C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jsatw/CLionProjects/TermProject/bcit-comp2510-c-project/cmake-build-debug/CMakeFiles/rebuild_cache.dir

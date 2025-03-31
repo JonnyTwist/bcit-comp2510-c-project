@@ -152,6 +152,54 @@ dsm.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/dsm.c.s
 .PHONY : dsm.c.s
 
+file_m.obj: file_m.c.obj
+.PHONY : file_m.obj
+
+# target to build an object file
+file_m.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/file_m.c.obj
+.PHONY : file_m.c.obj
+
+file_m.i: file_m.c.i
+.PHONY : file_m.i
+
+# target to preprocess a source file
+file_m.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/file_m.c.i
+.PHONY : file_m.c.i
+
+file_m.s: file_m.c.s
+.PHONY : file_m.s
+
+# target to generate assembly for a file
+file_m.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/file_m.c.s
+.PHONY : file_m.c.s
+
+list.obj: list.c.obj
+.PHONY : list.obj
+
+# target to build an object file
+list.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/list.c.obj
+.PHONY : list.c.obj
+
+list.i: list.c.i
+.PHONY : list.i
+
+# target to preprocess a source file
+list.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/list.c.i
+.PHONY : list.c.i
+
+list.s: list.c.s
+.PHONY : list.s
+
+# target to generate assembly for a file
+list.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/list.c.s
+.PHONY : list.c.s
+
 main.obj: main.c.obj
 .PHONY : main.obj
 
@@ -200,6 +248,30 @@ patient.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/patient.c.s
 .PHONY : patient.c.s
 
+test.obj: test.c.obj
+.PHONY : test.obj
+
+# target to build an object file
+test.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/test.c.obj
+.PHONY : test.c.obj
+
+test.i: test.c.i
+.PHONY : test.i
+
+# target to preprocess a source file
+test.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/test.c.i
+.PHONY : test.c.i
+
+test.s: test.c.s
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/test.c.s
+.PHONY : test.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -212,12 +284,21 @@ help:
 	@echo ... dsm.obj
 	@echo ... dsm.i
 	@echo ... dsm.s
+	@echo ... file_m.obj
+	@echo ... file_m.i
+	@echo ... file_m.s
+	@echo ... list.obj
+	@echo ... list.i
+	@echo ... list.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
 	@echo ... patient.obj
 	@echo ... patient.i
 	@echo ... patient.s
+	@echo ... test.obj
+	@echo ... test.i
+	@echo ... test.s
 .PHONY : help
 
 

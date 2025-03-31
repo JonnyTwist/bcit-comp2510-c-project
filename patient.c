@@ -9,6 +9,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "list.h"
+
 /**
  * Clears the remaining input when there is overflow.
  */
@@ -21,14 +23,15 @@ void emptyRemainingInput() {
 
 /**
  * Checks if an ID exists inside a specified array.
- * @param arr The array to check the ID for.
+ * @param patient_list the list to check for the ID.
  * @param size The expected size of the array.
  * @param id The ID we are looking for.
  * @return the index of the ID if it is found. Otherwise, return -1.
  */
-int idExists(patient arr[], int size, int id) {
+int idExists(struct list* patient_list, int size, int id) {
     for (int i = 0; i < size; i++) {
-        if (arr[i].patient_id == id) {
+        patient p = *(patient*)list_get(patient_list, i);
+        if (p.patient_id == id) {
             return i;
         }
     }
@@ -47,6 +50,7 @@ void addPatient() {
         return;
     }
 
+    //todo clarify this (see if -10 is removable)
     patient patientToAdd;
     int patientID = -10;
     char patientName[MAX_STRING_LENGTH];
@@ -67,9 +71,13 @@ void addPatient() {
     patientToAdd.age = patientAge;
     strcpy(patientToAdd.diagnosis, patientDiagnosis);
     patientToAdd.room_number = patientRoomNumber;
+    patientToAdd.date_admitted = getCurrentTime();
+    patientToAdd.date_discharged = NULL;
 
-    patients[patientCount] = patientToAdd;
+    list_push_front(patientList, &patientToAdd, sizeof(patient));
     patientCount++;
+
+    //todo save to file
 }
 
 /**
@@ -220,6 +228,17 @@ int validateString(char string[MAX_STRING_LENGTH]){
 }
 
 /**
+ * Gets the current date time.
+ * @return the current time.
+ */
+struct tm* getCurrentTime()
+{
+    time_t now = time(NULL);
+    struct tm *local = localtime(&now);
+    return local;
+}
+
+/**
  * Allows the user to view all the patients currently in the database.
  */
 void viewAllPatients() {
@@ -315,8 +334,7 @@ void searchPatientByName() {
 }
 
 /**
- *
- * @param patientID
+ * @param patientID is the patients ID to discharge.
  * @return returns 0 if the patient has been discharged successfully, else 1
  * */
 int dischargePatient(int patientID) {
