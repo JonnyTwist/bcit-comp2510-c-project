@@ -39,7 +39,7 @@ int loadPatientsInfo(const char* filename, struct list** ps)
     fclose(f);
     return 0;
 }
-int loadDsmInfo(const char* filename, struct list* doctors)
+int loadDsmInfo(const char* filename, struct list** doctors)
 {
     FILE* f = fopen(filename, "rb");
     //fseek(File, pos, SEEK_SET);
