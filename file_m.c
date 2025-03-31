@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "list.h"
 #include "patient.h"
-#include "dsm.h"
 
 int savePatientsInfo(const char* filename, struct list* ps)
 {

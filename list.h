@@ -24,4 +24,4 @@ void* list_get(struct list* list, size_t index);
 size_t list_length(struct list* list);
 
 
-#endif LIST_H
+#endif //LIST_H

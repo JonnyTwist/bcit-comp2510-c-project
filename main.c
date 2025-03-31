@@ -9,13 +9,14 @@
 #include "test.h"
 #include "patient.h"
 #include "dsm.h"
+#include "list.h"
 
 /**
  *
  */
 int patientCount = 0;
 patient patients[50];
-doctor doctors[10];
+struct list* doctor_list;
 int doctorCount = 0;
 int schedule[7][3];
 void menu();
@@ -25,9 +26,9 @@ void menu();
  * @return 0
  */
 int main(void) {
-    //menu();
+    menu();
     //test();
-    test2();
+    //test2();
     return 0;
 }
 

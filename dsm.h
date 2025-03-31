@@ -4,9 +4,10 @@
  *@author Jonny Twist
  *@version 1.0
  */
-#include "list.h"
 #ifndef DSM_H
 #define DSM_H
+
+
 
 #define MIN_ID 0
 #define DAYS_IN_WEEK 7
@@ -38,5 +39,5 @@ void printSchedule();
 void printTableHeader();
 void truncateStr(char str[], int newLength);
 void clearTimeSlot();
-
+#include "list.h"
 #endif //DSM_H

@@ -9,7 +9,6 @@
 #include "dsm.h"
 #include <stdio.h>
 #include <string.h>
-#include "list.h"
 
 /**
  * Searches through an array of doctors to see if a doctor with a specified ID exists.
