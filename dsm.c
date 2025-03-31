@@ -17,9 +17,10 @@
  * @param id the ID we are looking for.
  * @return the index of the found ID, else -1
  */
-int docIdExists(doctor arr[], int size, int id) {
+int docIdExists(struct list* doc_list, int size, int id) {
     for (int i = 0; i < size; i++) {
-        if (arr[i].doctor_id == id) {
+        doctor doc = *(doctor*)list_get(doc_list, i);
+        if ( doc.doctor_id == id) {
             return i;
         }
     }
@@ -46,7 +47,7 @@ void addDoc(){
     doctorToAdd.doctor_id = doctorID;
     strcpy(doctorToAdd.name, doctorName);
 
-    doctors[doctorCount] = doctorToAdd;
+    list_push_front(&doctor_list,&doctorToAdd,sizeof(doctor));
     doctorCount++;
 }
 /**
@@ -60,7 +61,7 @@ void enterDocId(int* id)
         printf("Enter the doctor's ID: ");
         scanf("%d", id);
         getchar();
-        if (*id > MIN_ID && docIdExists(doctors, doctorCount, *id) == ID_NOT_FOUND) {
+        if (*id > MIN_ID && docIdExists(doctor_list, doctorCount, *id) == ID_NOT_FOUND) {
             valid = 1;
         } else {
             printf("Invalid or duplicate ID!\n");
@@ -117,7 +118,7 @@ void displayDoctors(){
     printf("\nAll Doctors:\n");
     printf("ID\tName\n");
     for (int i = 0; i < doctorCount; i++) {
-        doctor d = doctors[i];
+        doctor d = *(doctor*)list_get(doctor_list, i);
         printf("%d\t%s\n", d.doctor_id, d.name);
     }
 }
@@ -129,13 +130,12 @@ void displayDoctors(){
  */
 int removeDoctor(int doctorID){
     int index;
-    index = docIdExists(doctors, doctorCount, doctorID);
+    index = docIdExists(doctor_list, doctorCount, doctorID);
 
     if (index == ID_NOT_FOUND)
         return 1;
 
-    for (int i = index; i < doctorCount - 1; i++)
-        doctors[i] = doctors[i + 1];
+    list_remove_at(&doctor_list, index);
 
     doctorCount--;
 
@@ -168,7 +168,7 @@ void addDocToTimeSlot(){
     printf("Enter ID of doctor to be assigned: ");
     scanf("%d", &docID);
 
-    if (docIdExists(doctors, doctorCount, docID) == ID_NOT_FOUND) {
+    if (docIdExists(doctor_list, doctorCount, docID) == ID_NOT_FOUND) {
         printf("Doctor not found.\n");
         return;
     }
@@ -202,7 +202,7 @@ void addDocToTimeSlot(){
         printf("Evening Shift = 2\n");
         printf("Cancel = -1\n");
 
-        printf("Enter day of the week to assign doctor to: ");
+        printf("Enter shift of the day to assign doctor to: ");
         scanf("%d", &shift);
 
         if (shift == -1){
@@ -246,10 +246,11 @@ void printSchedule(){
             else{
                 int index;
                 int id = schedule[i][j];
-                index = docIdExists(doctors, doctorCount, id);
+                index = docIdExists(doctor_list, doctorCount, id);
                 char doctorName[MAX_STRING_LENGTH];
 
-                strcpy(doctorName, doctors[index].name);
+                doctor doc = *(doctor*) list_get(doctor_list, index);
+                strcpy(doctorName, doc.name);
                 truncateStr(doctorName, TABLE_FORMATTED_LENGTH);
                 printf("%-15s", doctorName);
             }

@@ -116,7 +116,10 @@ void print_patient(struct list* ps)
     {
         patient p = *(patient*)ps->elt;
         printf("patient %d:\n", i);
+        printf("\tid: %d\n", p.patient_id);
         printf("\tage: %d\n", p.age);
+        printf("\tdiagnosis: %s\n", p.diagnosis);
+        printf("\tname: %s\n", p.name);
         ps = ps->next;
         i++;
     }
@@ -134,7 +137,7 @@ void test2()
         p1.diagnosis[0] = 'A' + i;
         p1.diagnosis[1] = 0;
         p1.patient_id = i;
-        p1.name[0] = 87;
+        p1.name[0] = 87 - i;
         p1.name[1] = 0;
 
         list_push_front(patient_list, &p1, sizeof(patient));
@@ -144,10 +147,9 @@ void test2()
     savePatientsInfo(filename, *patient_list);
     print_patient(*patient_list);
     list_clear(patient_list);
-    printf("patients cleared\n-----------------------\n");
+    printf("patients cleared\n------------------------\n");
     print_patient(*patient_list);
     printf("------------------------\n");
     loadPatientsInfo(filename, patient_list);
     print_patient(*patient_list);
 }
-

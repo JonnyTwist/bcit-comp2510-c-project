@@ -4,9 +4,10 @@
  *@author Jonny Twist
  *@version 1.0
  */
-
 #ifndef DSM_H
 #define DSM_H
+
+
 
 #define MIN_ID 0
 #define DAYS_IN_WEEK 7
@@ -15,17 +16,18 @@
 #define MAX_STRING_LENGTH 100
 #define ID_NOT_FOUND (-1)
 
+
 typedef struct doctor_struct
 {
     int doctor_id; // not negative
     char name[100];
 } doctor;
 
-extern doctor doctors[10];
+extern struct list* doctor_list;
 extern int doctorCount;
 extern int schedule[DAYS_IN_WEEK][SHIFTS_PER_DAY];
 
-int docIdExists(doctor arr[], int size, int id);
+int docIdExists(struct list* doc_list, int size, int id);
 void addDoc();
 void enterDocId(int* id);
 void enterDocName(char* name);
@@ -37,5 +39,5 @@ void printSchedule();
 void printTableHeader();
 void truncateStr(char str[], int newLength);
 void clearTimeSlot();
-
+#include "list.h"
 #endif //DSM_H

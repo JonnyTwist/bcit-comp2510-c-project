@@ -14,15 +14,11 @@
 //todo remove
 #include <time.h>
 
-/**
- *
- */
 int patientCount = 0;
 //patient patients[50];
 struct list* patientList;
 struct list* dischargedPatientList;
-
-doctor doctors[10];
+struct list* doctor_list;
 int doctorCount = 0;
 int schedule[7][3];
 void menu();
