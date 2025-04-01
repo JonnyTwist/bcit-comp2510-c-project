@@ -9,6 +9,7 @@
 #define PATIENT_H
 
 #include <time.h>
+#include "list.h"
 
 #define MIN_AGE 0
 #define MIN_ID 0
@@ -29,10 +30,11 @@ typedef struct patient_struct
 
 //extern patient patients[50];
 extern int patientCount;
+extern int dischargedPatientCount;
 extern struct list* patientList;
 extern struct list* dischargedPatientList;
 
-int idExists(patient arr[], int size, int id);
+int idExists(struct list* patient_list, int size, int id);
 int dischargePatient(int patient_id);
 void displayPatient(patient patient);
 void emptyRemainingInput();

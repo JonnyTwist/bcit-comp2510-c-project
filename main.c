@@ -15,6 +15,7 @@
 #include <time.h>
 
 int patientCount = 0;
+int dischargedPatientCount = 0;
 //patient patients[50];
 struct list* patientList;
 struct list* dischargedPatientList;

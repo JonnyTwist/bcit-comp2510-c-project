@@ -74,7 +74,7 @@ void addPatient() {
     patientToAdd.date_admitted = getCurrentTime();
     patientToAdd.date_discharged = NULL;
 
-    list_push_front(patientList, &patientToAdd, sizeof(patient));
+    list_push_front(&patientList, &patientToAdd, sizeof(patient));
     patientCount++;
 
     //todo save to file
@@ -91,7 +91,7 @@ void enterPatientId(int* id)
         printf("Enter the patient ID: ");
         scanf("%d", id);
         getchar();
-        if (*id > MIN_ID && idExists(patients, patientCount, *id) == ID_NOT_FOUND) {
+        if (*id > MIN_ID && idExists(patientList, patientCount, *id) == ID_NOT_FOUND) {
             valid = 1;
         } else {
             printf("Invalid or duplicate ID!\n");
@@ -251,7 +251,7 @@ void viewAllPatients() {
     printf("\nAll patient details:\n");
     printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
     for (int i = 0; i < patientCount; i++) {
-        patient p = patients[i];
+        patient p = *(patient*)list_get(patientList, i);
         printf("%d\t%-20s\t%d\t%-10d\t%s\n", p.patient_id, p.name, p.age, p.room_number, p.diagnosis);
     }
 }
@@ -288,11 +288,12 @@ void searchPatientByID() {
     scanf("%d", &id);
     getchar();
 
-    index = idExists(patients, patientCount, id);
+    index = idExists(patientList, patientCount, id);
 
     if (index != ID_NOT_FOUND) {
         printf("Patient Found - ");
-        displayPatient(patients[index]);
+        patient p = *(patient*)list_get(patientList, index);
+        displayPatient(p);
     } else {
         printf("Patient not found.\n");
     }
@@ -317,12 +318,13 @@ void searchPatientByName() {
         //all the names that match the search
         name[strcspn(name, "\n")] = 0;
         for (int i = 0; i < patientCount; i++) {
-            if (strcmp(patients[i].name, name) == 0) {
+            patient p = *(patient*)list_get(patientList, i);
+            if (strcmp(p.name, name) == 0) {
                 printf("Patient Found - ");
                        // "ID: %d, Name: %s, Age: %d, Room Num: %d, Diagnosis: %s\n",
                        // patients[i].patient_id, patients[i].name, patients[i].age,
                        // patients[i].room_number, patients[i].diagnosis);
-                displayPatient(patients[i]);
+                displayPatient(p);
                 //just to make sure it doesn't say no patient found
                 index = i;
             }
@@ -339,15 +341,20 @@ void searchPatientByName() {
  * */
 int dischargePatient(int patientID) {
     int index;
-    index = idExists(patients, patientCount, patientID);
+    index = idExists(patientList, patientCount, patientID);
 
-    if (index == ID_NOT_FOUND)
+    if (index == ID_NOT_FOUND) {
         return 1;
+    }
 
-    for (int i = index; i < patientCount - 1; i++)
-        patients[i] = patients[i + 1];
+    patient p = *(patient*)list_get(patientList, index);
+    p.date_discharged = getCurrentTime();
+
+    list_remove_at(&patientList, index);
+    list_push_front(&dischargedPatientList, &p, sizeof(patient));
 
     patientCount--;
+    dischargedPatientCount++;
 
     return 0;
 }
