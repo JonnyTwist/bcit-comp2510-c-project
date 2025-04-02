@@ -15,6 +15,8 @@
 #define TABLE_FORMATTED_LENGTH 13
 #define MAX_STRING_LENGTH 100
 #define ID_NOT_FOUND (-1)
+#define DOCTOR_FILE "doctorsData.bin"
+#define DOCTOR_FILE_BACKUP "doctorsDataBackup.bin"
 
 
 typedef struct doctor_struct

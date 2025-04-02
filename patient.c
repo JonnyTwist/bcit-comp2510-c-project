@@ -78,8 +78,7 @@ void addPatient() {
     list_push_front(&patientList, &patientToAdd, sizeof(patient));
     patientCount++;
 
-    //todo save to file
-    savePatientsInfo("patientData.bin", patientList, dischargedPatientList);
+    savePatientsInfo(PATIENT_FILE, patientList, dischargedPatientList);
 }
 
 /**
@@ -245,6 +244,8 @@ struct tm* getCurrentTime()
  */
 void viewAllPatients() {
 
+    //todo update this method
+
     if (patientCount == 0){
         printf("There are no Patients!\n");
         return;
@@ -260,9 +261,11 @@ void viewAllPatients() {
 }
 
 /**
- * Allows the user to view all the patients currently in the database.
+ * Allows the user to view all discharged patients currently in the database.
  */
 void viewAllDischargedPatients() {
+
+    //todo update this method
 
     if (dischargedPatientCount == 0){
         printf("There are no Patients!\n");
@@ -343,9 +346,6 @@ void searchPatientByName() {
             patient p = *(patient*)list_get(patientList, i);
             if (strcmp(p.name, name) == 0) {
                 printf("Patient Found - ");
-                       // "ID: %d, Name: %s, Age: %d, Room Num: %d, Diagnosis: %s\n",
-                       // patients[i].patient_id, patients[i].name, patients[i].age,
-                       // patients[i].room_number, patients[i].diagnosis);
                 displayPatient(p);
                 //just to make sure it doesn't say no patient found
                 index = i;
@@ -378,8 +378,7 @@ int dischargePatient(int patientID) {
     patientCount--;
     dischargedPatientCount++;
 
-    //todo save to file
-    savePatientsInfo("patientData.bin", patientList, dischargedPatientList);
+    savePatientsInfo(PATIENT_FILE, patientList, dischargedPatientList);
 
     return 0;
 }

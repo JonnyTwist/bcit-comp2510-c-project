@@ -16,6 +16,8 @@
 #define MIN_ROOM_NUM 0
 #define MAX_STRING_LENGTH 100
 #define ID_NOT_FOUND (-1)
+#define PATIENT_FILE "patientData.bin"
+#define PATIENT_FILE_BACKUP "patientDataBackup.bin"
 
 typedef struct patient_struct
 {

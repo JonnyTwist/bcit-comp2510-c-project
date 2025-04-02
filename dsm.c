@@ -14,7 +14,7 @@
 
 /**
  * Searches through an array of doctors to see if a doctor with a specified ID exists.
- * @param arr the array of doctors.
+ * @param doc_list the array of doctors.
  * @param size the size of the array.
  * @param id the ID we are looking for.
  * @return the index of the found ID, else -1
@@ -52,7 +52,7 @@ void addDoc(){
     list_push_front(&doctor_list,&doctorToAdd,sizeof(doctor));
     doctorCount++;
 
-    saveDsmInfo("doctorsData.bin", doctor_list);
+    saveDsmInfo(DOCTOR_FILE, doctor_list);
 }
 /**
  * Store the doctor's id
@@ -143,6 +143,8 @@ int removeDoctor(int doctorID){
 
     doctorCount--;
 
+    saveDsmInfo(DOCTOR_FILE, doctor_list);
+
     return 0;
 }
 
@@ -159,6 +161,7 @@ void removeDoctorFromSchedule(int id){
             }
         }
     }
+    saveDsmInfo(DOCTOR_FILE, doctor_list);
 }
 
 /**
@@ -220,6 +223,8 @@ void addDocToTimeSlot(){
     } while (shift < 0 || shift > 2);
 
     schedule[weekDay][shift] = docID;
+
+    saveDsmInfo(DOCTOR_FILE, doctor_list);
 }
 
 /**

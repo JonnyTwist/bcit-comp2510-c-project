@@ -99,21 +99,21 @@ void menu(){
 
 void readStoredData()
 {
-    loadPatientsInfo("patientData.bin", &patientList, &dischargedPatientList);
-    loadDsmInfo("doctorsData.bin", &doctor_list);
+    loadPatientsInfo(PATIENT_FILE, &patientList, &dischargedPatientList);
+    loadDsmInfo(DOCTOR_FILE, &doctor_list);
 }
 
 void backupData()
 {
-    saveDsmInfo("doctorsData.bin", doctor_list);
-    savePatientsInfo("patientData.bin", patientList, dischargedPatientList);
+    saveDsmInfo(DOCTOR_FILE, doctor_list);
+    savePatientsInfo(PATIENT_FILE, patientList, dischargedPatientList);
 
-    saveDsmInfo("doctorsDataBackup.bin", doctor_list);
-    savePatientsInfo("patientDataBackup.bin", patientList, dischargedPatientList);
+    saveDsmInfo(DOCTOR_FILE_BACKUP, doctor_list);
+    savePatientsInfo(PATIENT_FILE_BACKUP, patientList, dischargedPatientList);
 }
 
 void restoreToBackups()
 {
-    loadPatientsInfo("patientDataBackup.bin", &patientList, &dischargedPatientList);
-    loadDsmInfo("doctorsDataBackup.bin", &doctor_list);
+    loadPatientsInfo(PATIENT_FILE_BACKUP, &patientList, &dischargedPatientList);
+    loadDsmInfo(DOCTOR_FILE_BACKUP, &doctor_list);
 }
