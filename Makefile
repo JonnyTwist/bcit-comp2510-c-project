@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
 
 # Sources and Objects
-SRC = main.c patient.c dsm.c
+SRC = main.c patient.c dsm.c list.c test.c file_m.c
 OBJ = $(SRC:.c=.o)
 
 # Output Binary

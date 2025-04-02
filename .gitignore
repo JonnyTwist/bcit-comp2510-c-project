@@ -1,4 +1,6 @@
 *.exe
-cmake-build-*
+cmake-build-debug
 CMakeFiles
 Testing
+CMakeCache.txt
+Makefile

@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "file_m.h"
+
 /**
  * Searches through an array of doctors to see if a doctor with a specified ID exists.
  * @param arr the array of doctors.
@@ -49,6 +51,8 @@ void addDoc(){
 
     list_push_front(&doctor_list,&doctorToAdd,sizeof(doctor));
     doctorCount++;
+
+    saveDsmInfo("doctorsData.bin", doctor_list);
 }
 /**
  * Store the doctor's id

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "file_m.h"
 #include "list.h"
 
 /**
@@ -78,6 +79,7 @@ void addPatient() {
     patientCount++;
 
     //todo save to file
+    savePatientsInfo("patientData.bin", patientList, dischargedPatientList);
 }
 
 /**
@@ -252,6 +254,26 @@ void viewAllPatients() {
     printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
     for (int i = 0; i < patientCount; i++) {
         patient p = *(patient*)list_get(patientList, i);
+        //todo print date admitted
+        printf("%d\t%-20s\t%d\t%-10d\t%s\n", p.patient_id, p.name, p.age, p.room_number, p.diagnosis);
+    }
+}
+
+/**
+ * Allows the user to view all the patients currently in the database.
+ */
+void viewAllDischargedPatients() {
+
+    if (dischargedPatientCount == 0){
+        printf("There are no Patients!\n");
+        return;
+    }
+
+    printf("\nAll patient details:\n");
+    printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
+    for (int i = 0; i < dischargedPatientCount; i++) {
+        patient p = *(patient*)list_get(dischargedPatientList, i);
+        //todo print date discharged (maybe admitted as well)
         printf("%d\t%-20s\t%d\t%-10d\t%s\n", p.patient_id, p.name, p.age, p.room_number, p.diagnosis);
     }
 }
@@ -355,6 +377,9 @@ int dischargePatient(int patientID) {
 
     patientCount--;
     dischargedPatientCount++;
+
+    //todo save to file
+    savePatientsInfo("patientData.bin", patientList, dischargedPatientList);
 
     return 0;
 }

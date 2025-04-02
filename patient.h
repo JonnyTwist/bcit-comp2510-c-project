@@ -45,6 +45,7 @@ void enterPatientAge(int* age);
 void enterPatientDiagnosis(char* diagnosis);
 void enterPatientRoom(int* roomNumber);
 void viewAllPatients();
+void viewAllDischargedPatients();
 void searchPatient();
 void searchPatientByID();
 void searchPatientByName();
