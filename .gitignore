@@ -1,5 +1,4 @@
 *.exe
-*.bin
 cmake-build-debug
 CMakeFiles
 Testing
