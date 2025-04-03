@@ -17,7 +17,6 @@
 
 int patientCount = 0;
 int dischargedPatientCount = 0;
-//patient patients[50];
 struct list* patientList;
 struct list* dischargedPatientList;
 struct list* doctor_list;
@@ -114,6 +113,7 @@ void backupData()
 
 void restoreToBackups()
 {
+    //todo ask for confirm before restoring backups
     loadPatientsInfo(PATIENT_FILE_BACKUP, &patientList, &dischargedPatientList);
     loadDsmInfo(DOCTOR_FILE_BACKUP, &doctor_list);
 }

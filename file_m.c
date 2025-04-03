@@ -3,106 +3,134 @@
 #include "patient.h"
 #include "dsm.h"
 
-
-int savePatientsInfo(const char* filename, struct list* ps, struct list* dps)
+/**
+ * Saves the patient information and discharged patient information to a file.
+ * @param filename The name of the file to save the data to.
+ * @param pList Pointer to the list of patients.
+ * @param dList Pointer to the list of discharged patients.
+ * @return 0 on success, 1 if the file could not be opened.
+ */
+int savePatientsInfo(const char* filename, struct list* pList, struct list* dList)
 {
-    FILE* f = fopen(filename, "wb");
+    FILE* file = fopen(filename, "wb");
 
-    if (f == NULL)
+    if (file == NULL)
     {
         printf("Failed to save the %s file\n", filename);
         return 1;
     }
 
-    size_t patientListSize = list_length(ps);
-    fwrite(&patientListSize, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < patientListSize; i++)
+    size_t pListLength = list_length(pList);
+    fwrite(&pListLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < pListLength; i++)
     {
-        patient p = *(patient *)list_get(ps, i);
-        fwrite(&p, sizeof (patient), 1, f);
+        patient p = *(patient *)list_get(pList, i);
+        fwrite(&p, sizeof (patient), 1, file);
     }
 
-    size_t dischargedListSize = list_length(dps);
-    fwrite(&dischargedListSize, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < dischargedListSize; i++)
+    size_t dListLength = list_length(dList);
+    fwrite(&dListLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < dListLength; i++)
     {
-        patient p = *(patient *)list_get(dps, i);
-        fwrite(&p, sizeof (patient), 1, f);
+        patient p = *(patient *)list_get(dList, i);
+        fwrite(&p, sizeof (patient), 1, file);
     }
 
-    fclose(f);
+    fclose(file);
 
     return 0;
 }
+
+/**
+ * Saves the doctor information and schedule to a file.
+ * @param filename The name of the file to save the data to.
+ * @param doctors Pointer to the list of doctors.
+ * @return 0 on success, 1 if the file could not be opened.
+ */
 int saveDsmInfo(const char* filename, struct list* doctors)
 {
-    FILE* f = fopen(filename, "wb");
+    FILE* file = fopen(filename, "wb");
 
-    if (f == NULL)
+    if (file == NULL)
     {
         printf("Failed to save the %s file\n", filename);
         return 1;
     }
 
-    size_t l = list_length(doctors);
-    fwrite(&l, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < l; i++)
+    size_t doctorsLength = list_length(doctors);
+    fwrite(&doctorsLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < doctorsLength; i++)
     {
         doctor d = *(doctor *)list_get(doctors, i);
-        fwrite(&d, sizeof (doctor), 1, f);
+        fwrite(&d, sizeof (doctor), 1, file);
     }
     for(size_t i = 0; i < DAYS_IN_WEEK; i++)
+    {
         for(size_t j = 0; j < SHIFTS_PER_DAY; j++)
         {
-            fwrite(&schedule[i][j], sizeof (int), 1, f);
+            fwrite(&schedule[i][j], sizeof (int), 1, file);
         }
-    fclose(f);
+    }
+    fclose(file);
 
     return 0;
 }
 
-int loadPatientsInfo(const char* filename, struct list** ps, struct list** dps)
+/**
+ * Loads patient information and discharged patient information from a file.
+ * @param filename The name of the file to load the data from.
+ * @param pList Pointer to the pointer of the list of patients.
+ * @param dList Pointer to the pointer of the list of discharged patients.
+ * @return 0 on success, 1 if the file could not be opened.
+ */
+int loadPatientsInfo(const char* filename, struct list** pList, struct list** dList)
 {
-    FILE* f = fopen(filename, "rb");
+    FILE* file = fopen(filename, "rb");
 
-    if (f == NULL)
+    if (file == NULL)
     {
         printf("Failed to open the %s file\n", filename);
         return 1;
     }
 
-    list_clear(ps);
-    list_clear(dps);
+    list_clear(pList);
+    list_clear(dList);
 
-    size_t l;
-    fread(&l, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < l; i++)
+    size_t pListLength;
+    fread(&pListLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < pListLength; i++)
     {
         patient patient;
-        fread(&patient, sizeof(patient), 1, f);
-        list_push_front(ps, &patient, sizeof(patient));
+        fread(&patient, sizeof(patient), 1, file);
+        list_push_front(pList, &patient, sizeof(patient));
     }
 
-    size_t m;
-    fread(&m, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < m; i++)
+    size_t dListLength;
+    fread(&dListLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < dListLength; i++)
     {
         patient patient;
-        fread(&patient, sizeof(patient), 1, f);
-        list_push_front(dps, &patient, sizeof(patient));
+        fread(&patient, sizeof(patient), 1, file);
+        list_push_front(dList, &patient, sizeof(patient));
     }
 
-    fclose(f);
-    patientCount = (int) l;
-    dischargedPatientCount = (int) m;
+    fclose(file);
+    patientCount = (int) pListLength;
+    dischargedPatientCount = (int) dListLength;
     return 0;
 }
 
+/**
+ * Loads doctor information and schedule from a file.
+ * @param filename The name of the file to load the data from.
+ * @param doctors Pointer to the pointer of the list of doctors.
+ * @return 0 on success, 1 if the file could not be opened.
+ */
 int loadDsmInfo(const char* filename, struct list** doctors)
 {
-    FILE* f = fopen(filename, "rb");
+    FILE* file = fopen(filename, "rb");
 
-    if (f == NULL)
+    if (file == NULL)
     {
         printf("Failed to open the %s file\n", filename);
         return 1;
@@ -110,22 +138,24 @@ int loadDsmInfo(const char* filename, struct list** doctors)
 
     list_clear(doctors);
 
-    size_t l;
-    fread(&l, sizeof(size_t), 1, f);
-    for (size_t i = 0; i < l; i++)
+    size_t doctorsLength;
+    fread(&doctorsLength, sizeof(size_t), 1, file);
+    for (size_t i = 0; i < doctorsLength; i++)
     {
         doctor doctor;
-        fread(&doctor, sizeof(doctor), 1, f);
+        fread(&doctor, sizeof(doctor), 1, file);
         list_push_front(doctors, &doctor, sizeof(doctor));
     }
+
     for(size_t i = 0; i < DAYS_IN_WEEK; i++)
     {
         for(size_t j = 0; j < SHIFTS_PER_DAY; j++)
         {
-            fread(&schedule[i][j], sizeof (int), 1, f);
+            fread(&schedule[i][j], sizeof (int), 1, file);
         }
     }
-    fclose(f);
-    doctorCount = (int) l;
+
+    fclose(file);
+    doctorCount = (int) doctorsLength;
     return 0;
 }
