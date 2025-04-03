@@ -14,4 +14,5 @@ add_executable(bcit_comp2510_c_project main.c
         test.h
         file_m.h
         file_m.c
+        report.h
 )
