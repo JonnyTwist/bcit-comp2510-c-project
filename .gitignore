@@ -4,3 +4,4 @@ CMakeFiles
 Testing
 CMakeCache.txt
 Makefile
+*.c.obj
