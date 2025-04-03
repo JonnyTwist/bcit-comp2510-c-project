@@ -14,7 +14,9 @@ int list_push_front(struct list** list, void* elt, size_t elt_size)
 {
     struct list* new = malloc(sizeof(struct list));
     if (new == NULL || list == NULL || elt == NULL)
+    {
         return -1;
+    }
 
     new->elt = malloc(elt_size);
     if (new->elt == NULL)
@@ -39,7 +41,10 @@ int list_push_back(struct list** list, void* elt)
 {
     struct list* new = malloc(sizeof(struct list));
     if (new == NULL || list == NULL || elt == NULL)
+    {
         return -1;
+    }
+
     new->elt = elt;
     new->next = NULL;
 
@@ -98,7 +103,9 @@ void* list_get(struct list* list, size_t index)
         list = list->next;
     }
     if (list)
+    {
         res = list->elt;
+    }
     return res;
 }
 
@@ -111,11 +118,15 @@ void* list_pop_front(struct list** list)
 {
     void* res = NULL;
     if (list == NULL)
+    {
         return NULL;
+    }
     struct list* head = *list;
 
     if (head == NULL)
+    {
         return NULL;
+    }
 
     *list = head->next;
     res = head->elt;
