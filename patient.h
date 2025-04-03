@@ -26,8 +26,13 @@ typedef struct patient_struct
     int age;
     char diagnosis[100];
     int room_number;
-    struct tm* date_admitted;
-    struct tm* date_discharged;
+    int date_admitted;
+    int month_admitted;
+    int year_admitted;
+    int date_discharged;
+    int month_discharged;
+    int year_discharged;
+    int is_discharged;
 } patient;
 
 //extern patient patients[50];
@@ -53,6 +58,6 @@ void searchPatientByID();
 void searchPatientByName();
 void stringTrim(char* string);
 int validateString(char string[100]);
-struct tm* getCurrentTime();
+void getCurrentTime(int *date, int *month, int *year);
 
 #endif //PATIENT_H

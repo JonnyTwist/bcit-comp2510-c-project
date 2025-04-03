@@ -2,6 +2,7 @@
 #include "list.h"
 #include "patient.h"
 #include "dsm.h"
+#include <time.h>
 
 /**
  * Saves the patient information and discharged patient information to a file.

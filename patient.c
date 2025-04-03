@@ -11,6 +11,7 @@
 
 #include "file_m.h"
 #include "list.h"
+#include <time.h>
 
 /**
  * Clears the remaining input when there is overflow.
@@ -72,8 +73,12 @@ void addPatient() {
     patientToAdd.age = patientAge;
     strcpy(patientToAdd.diagnosis, patientDiagnosis);
     patientToAdd.room_number = patientRoomNumber;
-    patientToAdd.date_admitted = getCurrentTime();
-    patientToAdd.date_discharged = NULL;
+
+    getCurrentTime(&patientToAdd.date_admitted,
+                   &patientToAdd.month_admitted,
+                   &patientToAdd.year_admitted);
+
+    patientToAdd.is_discharged = 0;
 
     list_push_front(&patientList, &patientToAdd, sizeof(patient));
     patientCount++;
@@ -232,11 +237,14 @@ int validateString(char string[MAX_STRING_LENGTH]){
  * Gets the current date time.
  * @return the current time.
  */
-struct tm* getCurrentTime()
+void getCurrentTime(int *date, int *month, int *year)
 {
     time_t now = time(NULL);
     struct tm *local = localtime(&now);
-    return local;
+
+    *date = local->tm_mday;
+    *month = local->tm_mon + 1;
+    *year = local->tm_year + 1900;
 }
 
 /**
@@ -252,11 +260,13 @@ void viewAllPatients() {
     }
 
     printf("\nAll patient details:\n");
-    printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
+    printf("%-7s %-15s %-5s %-10s %-25s %-15s\n", "ID", "Name", "Age", "Room Use", "Diagnosis", "Date admitted");
     for (int i = 0; i < patientCount; i++) {
         patient p = *(patient*)list_get(patientList, i);
         //todo print date admitted
-        printf("%d\t%-20s\t%d\t%-10d\t%s\n", p.patient_id, p.name, p.age, p.room_number, p.diagnosis);
+        printf("%-7d %-15s %-5d %-10d %-25s %d-%d-%d\n",
+            p.patient_id, p.name, p.age, p.room_number, p.diagnosis, p.year_admitted,
+            p.month_admitted, p.date_admitted);
     }
 }
 
@@ -370,7 +380,12 @@ int dischargePatient(int patientID) {
     }
 
     patient p = *(patient*)list_get(patientList, index);
-    p.date_discharged = getCurrentTime();
+
+    getCurrentTime(&p.date_discharged,
+                   &p.month_discharged,
+                   &p.year_discharged);
+
+    p.is_discharged = 1;
 
     list_remove_at(&patientList, index);
     list_push_front(&dischargedPatientList, &p, sizeof(patient));
@@ -384,13 +399,30 @@ int dischargePatient(int patientID) {
 }
 
 /**
- * Displays a patients details
+ * Displays a patients details.
  * @param patient the patient to be displayed.
  */
 void displayPatient(patient patient) {
-    printf("ID: %d\t Name: %s\t Age: %d\t Room Num: %d\t Diagnosis: %s\n",
-            patient.patient_id, patient.name, patient.age,
-            patient.room_number, patient.diagnosis);
+    if (patient.is_discharged == 0)
+    {
+        //print statement for currently admitted patients
+        printf("ID: %d\t Name: %s\t Age: %d\t Room Num: %d\t Diagnosis: %s\t Date admitted: %d-%d-%d\n",
+                patient.patient_id, patient.name, patient.age,
+                patient.room_number, patient.diagnosis,
+                patient.year_admitted,
+                patient.month_admitted,
+                patient.date_admitted);
+    }
+    else
+    {
+        //its never used but here's a print statement for discharged patients
+        printf("Previous ID: %d\t Name: %s\t Age: %d\t Previous Room Num: %d\t Diagnosis: %s Date discharged: %d-%d-%d\n",
+                patient.patient_id, patient.name, patient.age,
+                patient.room_number, patient.diagnosis,
+                patient.year_discharged,
+                patient.month_discharged,
+                patient.date_discharged);
+    }
 }
 
 
