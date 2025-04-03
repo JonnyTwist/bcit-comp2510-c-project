@@ -6,4 +6,5 @@
 #define BCIT_COMP2510_C_PROJECT_TEST_H
 void test();
 void test2();
+void test3();
 #endif //BCIT_COMP2510_C_PROJECT_TEST_H
