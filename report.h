@@ -1,10 +1,10 @@
 //
 // Created by maxym on 03/04/2025.
 //
-
 #ifndef BCIT_COMP2510_C_PROJECT_REPORT_H
 #define BCIT_COMP2510_C_PROJECT_REPORT_H
 #include "list.h"
+#include "time.h"
 
 typedef struct key_value
 {
@@ -25,8 +25,10 @@ typedef struct doc_use
 } Doc_use;
 
 void room_report(struct list* patient_list, struct list** room_report);
-int discharged_in_day(struct list* patient_list);
-int admitted_in_mwd(struct list* patient_list);
+int discharged_in_day(struct list* patient_list, struct tm left, struct tm right);
+int admitted_in_mwd(struct list* patient_list, struct tm left, struct tm right);
 void doctor_report(struct list* doctor_list, struct list** doc_report);
+int admitted_in_interval(struct list* patient_list, struct tm left, struct tm right);
+int discharged_in_interval(struct list* patient_list, struct tm left, struct tm right);
 
 #endif //BCIT_COMP2510_C_PROJECT_REPORT_H
