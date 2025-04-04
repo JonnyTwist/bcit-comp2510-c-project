@@ -32,11 +32,11 @@ void restoreToBackups();
  * @return 0
  */
 int main(void) {
-    readStoredData();
-    menu();
-    backupData();
+    //readStoredData();
+    //menu();
+    //backupData();
     //test();
-    //test2();
+    test3();
     return 0;
 }
 

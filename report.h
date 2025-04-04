@@ -6,6 +6,12 @@
 #define BCIT_COMP2510_C_PROJECT_REPORT_H
 #include "list.h"
 
+typedef struct key_value
+{
+    int key;
+    int value;
+} Key_value;
+
 typedef struct room_use_struct
 {
     int room_number;
