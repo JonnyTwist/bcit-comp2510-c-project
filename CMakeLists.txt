@@ -16,4 +16,5 @@ add_executable(bcit_comp2510_c_project main.c
         file_m.c
         report.h
         report.c
+        random.c
 )

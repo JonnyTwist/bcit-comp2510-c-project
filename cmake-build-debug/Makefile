@@ -248,6 +248,54 @@ patient.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/patient.c.s
 .PHONY : patient.c.s
 
+random.obj: random.c.obj
+.PHONY : random.obj
+
+# target to build an object file
+random.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/random.c.obj
+.PHONY : random.c.obj
+
+random.i: random.c.i
+.PHONY : random.i
+
+# target to preprocess a source file
+random.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/random.c.i
+.PHONY : random.c.i
+
+random.s: random.c.s
+.PHONY : random.s
+
+# target to generate assembly for a file
+random.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/random.c.s
+.PHONY : random.c.s
+
+report.obj: report.c.obj
+.PHONY : report.obj
+
+# target to build an object file
+report.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/report.c.obj
+.PHONY : report.c.obj
+
+report.i: report.c.i
+.PHONY : report.i
+
+# target to preprocess a source file
+report.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/report.c.i
+.PHONY : report.c.i
+
+report.s: report.c.s
+.PHONY : report.s
+
+# target to generate assembly for a file
+report.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\bcit_comp2510_c_project.dir\build.make CMakeFiles/bcit_comp2510_c_project.dir/report.c.s
+.PHONY : report.c.s
+
 test.obj: test.c.obj
 .PHONY : test.obj
 
@@ -296,6 +344,12 @@ help:
 	@echo ... patient.obj
 	@echo ... patient.i
 	@echo ... patient.s
+	@echo ... random.obj
+	@echo ... random.i
+	@echo ... random.s
+	@echo ... report.obj
+	@echo ... report.i
+	@echo ... report.s
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s
