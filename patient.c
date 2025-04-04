@@ -260,7 +260,7 @@ void viewAllPatients() {
     }
 
     printf("\nAll patient details:\n");
-    printf("%-7s %-15s %-5s %-10s %-25s %-15s\n", "ID", "Name", "Age", "Room Use", "Diagnosis", "Date admitted");
+    printf("%-7s %-15s %-5s %-10s %-25s %-15s\n", "ID", "Name", "Age", "Room num", "Diagnosis", "Date admitted");
     for (int i = 0; i < patientCount; i++) {
         patient p = *(patient*)list_get(patientList, i);
         //todo print date admitted
@@ -278,16 +278,18 @@ void viewAllDischargedPatients() {
     //todo update this method
 
     if (dischargedPatientCount == 0){
-        printf("There are no Patients!\n");
+        printf("There are no discharged Patients!\n");
         return;
     }
 
-    printf("\nAll patient details:\n");
-    printf("ID\tName\t\t\tAge\tRoom Num\tDiagnosis\n");
+    printf("\nAll discharged patient details:\n");
+    printf("%-7s %-15s %-5s %-10s %-25s %-15s\n", "ID", "Name", "Age", "Room used", "Diagnosis", "Date discharged");
     for (int i = 0; i < dischargedPatientCount; i++) {
         patient p = *(patient*)list_get(dischargedPatientList, i);
-        //todo print date discharged (maybe admitted as well)
-        printf("%d\t%-20s\t%d\t%-10d\t%s\n", p.patient_id, p.name, p.age, p.room_number, p.diagnosis);
+        //todo print date admitted
+        printf("%-7d %-15s %-5d %-10d %-25s %d-%d-%d\n",
+            p.patient_id, p.name, p.age, p.room_number, p.diagnosis, p.year_discharged,
+            p.month_discharged, p.date_discharged);
     }
 }
 

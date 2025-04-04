@@ -17,3 +17,7 @@ cmake-build-debug/CMakeFiles/3.30.5/CMakeSystem.cmake
 cmake-build-debug/CMakeFiles/3.30.5/CMakeDetermineCompilerABI_C.bin
 cmake-build-debug/CMakeCache.txt
 cmake-build-debug/cmake_install.cmake
+doctorsDataBackup.bin
+doctorsData.bin
+patientDataBackup.bin
+patientData.bin
