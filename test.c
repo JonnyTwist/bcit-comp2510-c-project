@@ -172,7 +172,29 @@ void test3()
         p.diagnosis[1] = 0;
         p.patient_id = i + 1;p.age = 20;
         p.room_number = rand()%20;
+        p.date_discharged = (i % 10) + 1;
+        p.month_discharged = 1;
+        p.year_discharged = 1;
+        p.date_admitted = (i % 25) + 1;
+        p.month_admitted = 1;
+        p.year_admitted = 1;
         list_push_front(patients, &p, sizeof(patient));
+    }
+
+    for (int i = 0; i < 20; i++){
+        struct tm l;
+        struct tm r;
+
+        l.tm_mon = (i % 4) + 1;
+        l.tm_year = (i % 8) + 1;
+        l.tm_mday = 1;
+        r.tm_mon = (i % 2) + 1;
+        r.tm_year = (i % 8) + 1;
+        r.tm_mday = 25 - i;
+
+        printf("Admitted: %d\t discharged: %d\n",
+            admitted_in_interval(*patients, l, r),
+            discharged_in_interval(*patients, l, r));
     }
 
     room_report(*patients, report);

@@ -2,6 +2,7 @@
 #include "patient.h"
 #include <string.h>
 
+int compTm(struct tm l, struct tm r);
 int contains_key(int key, struct list* kv_list);
 int get_value(int key, struct list* kv_list, int* value);
 void put(Key_value kv, struct list** kv_list);
@@ -92,4 +93,71 @@ int get_value(int key, struct list* kv_list, int* value)
         kv_list = kv_list->next;
     }
     return res;
+}
+
+/**
+ * Counts the number of patient discharged between two dates
+ * left tm is smaller than right tm
+ * @param patient_list the patients to be counted
+ * @param left the first date (small one)
+ * @param right the second date (big one)
+ * @return the number of patient discharged between left and right
+ */
+int discharged_in_interval(struct list* patient_list, struct tm left, struct tm right)
+{
+    int count = 0;
+    while(patient_list)
+    {
+        patient p = *(patient*)patient_list->elt;
+        struct tm p_time;
+        p_time.tm_mday = p.date_discharged;
+        p_time.tm_mon = p.month_discharged;
+        p_time.tm_year = p.year_discharged;
+
+        int dl = compTm(left,p_time);
+        int dr = compTm(p_time, right);
+
+        count += dl <= 0 && dr <= 0;
+
+        patient_list = patient_list->next;
+    }
+    return count;
+}
+
+/**
+ * Counts the number of patient admitted between two dates
+ * left tm is smaller than right tm
+ * @param patient_list the patients to be counted
+ * @param left the first date (small one)
+ * @param right the second date (big one)
+ * @return the number of patient admitted between left and right
+ */
+int admitted_in_interval(struct list* patient_list, struct tm left, struct tm right)
+{
+    int count = 0;
+    while(patient_list)
+    {
+        patient p = *(patient*)patient_list->elt;
+        struct tm p_time;
+        p_time.tm_mday = p.date_admitted;
+        p_time.tm_mon = p.month_admitted;
+        p_time.tm_year = p.year_admitted;
+
+        int dl = compTm(left,p_time);
+        int dr = compTm(p_time, right);
+
+        count += dl <= 0 && dr <= 0;
+
+        patient_list = patient_list->next;
+    }
+    return count;
+}
+
+int compTm(struct tm l, struct tm r)
+{
+    int d_diff = l.tm_mday - r.tm_mday;
+    int m_diff = l.tm_mon - r.tm_mon;
+    int y_diff = l.tm_year - r.tm_year;
+
+    return y_diff*10000 + m_diff*100 + d_diff;
 }
