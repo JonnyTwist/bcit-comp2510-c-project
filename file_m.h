@@ -1,8 +1,16 @@
-#include "list.h"
+/**
+ * Allows the file management (file_m) to be used in other files
+ * @author Nicolas Bertrand
+ * @author Jonny Twist
+ * @version 1.0
+ */
+
+
 #ifndef BCIT_COMP2510_C_PROJECT_FILE_M_H
 #define BCIT_COMP2510_C_PROJECT_FILE_M_H
-
+#include "list.h"
 #include <time.h>
+
 #define IN_DAY 1
 #define IN_WEEK 2
 #define IN_MONTH 3

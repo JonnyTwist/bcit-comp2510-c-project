@@ -1,3 +1,10 @@
+/**
+ * Defines how our lists work
+ * @author Nicolas Bertrand
+ * @author Jonny Twist
+ * @version 1.0
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

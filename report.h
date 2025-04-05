@@ -1,6 +1,10 @@
-//
-// Created by maxym on 03/04/2025.
-//
+/**
+ * Allows the use of the report.c in other files.
+ * @author Nicolas Bertrand
+ * @author Jonny Twist
+ * @version 1.0
+ */
+
 #ifndef BCIT_COMP2510_C_PROJECT_REPORT_H
 #define BCIT_COMP2510_C_PROJECT_REPORT_H
 #include "list.h"

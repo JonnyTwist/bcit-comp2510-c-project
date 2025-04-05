@@ -1,3 +1,11 @@
+/**
+ * Displays the report menus and calculates how reports
+ * will be generated.
+ * @author Nicolas Bertrand
+ * @author Jonny Twist
+ * @version 1.0
+ */
+
 #include "report.h"
 #include "patient.h"
 #include "dsm.h"
@@ -188,8 +196,6 @@ int admitted_in_interval(struct list* patient_list, struct tm left, struct tm ri
         p_time.tm_mon = p.month_admitted - 1;
         p_time.tm_year = p.year_admitted - 1900;
 
-        printf("%d-%d-%d\n", p_time.tm_mday, p_time.tm_mon, p_time.tm_year);
-
         int dl = compTm(left,p_time);
         int dr = compTm(p_time, right);
 
@@ -212,41 +218,7 @@ int compTm(struct tm l, struct tm r)
     int m_diff = l.tm_mon - r.tm_mon;
     int y_diff = l.tm_year - r.tm_year;
 
-    printf("d_diff: %d, m_diff: %d, y_diff: %d\n", d_diff, m_diff, y_diff);
-
     return y_diff*10000 + m_diff*100 + d_diff;
-}
-
-/**
- * Prompts the user to enter a date in YYYY-MM format. If valid, it computes how many patients
- * were admitted in that month, creates a formatted message, and saves it to "admittedReport.txt".
- * @param option An integer option used in message creation (to customize the report content).
- */
-void request_month(int option)
-{
-    int year;
-    int month;
-
-    printf("Enter a date in YYYY-MM format: ");
-    if (scanf("%d-%d", &year, &month) == 2)
-    {
-        char message[100];
-        message[0] = 0;
-
-        int returnedCount;
-
-        struct tm leftTime = createTime(1, month, year);
-        struct tm rightTime = createTime(1, month + 1, year);
-
-        returnedCount = admitted_in_interval(patientList, leftTime, rightTime);
-        createMessage(message, option, leftTime, rightTime, returnedCount);
-        saveReportSpecific("admittedReport.txt", message);
-    }
-    else
-    {
-        printf("Error parsing date string.\n");
-        emptyRemainingInput();
-    }
 }
 
 /**
@@ -300,6 +272,39 @@ void createMessage(char* message, int option, struct tm leftTime, struct tm righ
 }
 
 /**
+ * Prompts the user to enter a date in YYYY-MM format. If valid, it computes how many patients
+ * were admitted in that month, creates a formatted message, and saves it to "admittedReport.txt".
+ * @param option An integer option used in message creation (to customize the report content).
+ */
+void request_month(int option)
+{
+    int year;
+    int month;
+
+    printf("Enter a date in YYYY-MM format: ");
+    if (scanf("%d-%d", &year, &month) == 2)
+    {
+        char message[100];
+        message[0] = 0;
+
+        int returnedCount;
+
+        struct tm leftTime = createTime(1, month, year);
+        struct tm rightTime = createTime(1, month + 1, year);
+
+        returnedCount = admitted_in_interval(patientList, leftTime, rightTime);
+        returnedCount += admitted_in_interval(dischargedPatientList, leftTime, rightTime);
+        createMessage(message, option, leftTime, rightTime, returnedCount);
+        saveReportSpecific("admittedReport.txt", message);
+    }
+    else
+    {
+        printf("Error parsing date string.\n");
+        emptyRemainingInput();
+    }
+}
+
+/**
  * Prompts the user to enter a date in YYYY-MM-DD format and generates a report.
  * The report is saved to "dischargedReport.txt" or "admittedReport.txt" accordingly.
  * @param intake Indicates the report type (1 = discharged, 2 = admitted).
@@ -344,12 +349,14 @@ void request_day(int intake, int option)
                 struct tm *rightTime = localtime(&date_time);
 
                 returnedCount = admitted_in_interval(patientList, leftTime, *rightTime);
+                returnedCount += admitted_in_interval(dischargedPatientList, leftTime, *rightTime);
                 createMessage(message, option, leftTime, *rightTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
             }
             else if (option == 3)
             {
                 returnedCount = admitted_in_interval(patientList, leftTime, leftTime);
+                returnedCount += admitted_in_interval(dischargedPatientList, leftTime, leftTime);
                 createMessage(message, option, leftTime, leftTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
             }
@@ -453,10 +460,12 @@ void reportMenu()
             case 3:
                 doc_report(report);
                 saveReportDocUtil("doctorUtilReport.txt", *report);
+                printf("Successfully saved doctor utilization report\n");
                 break;
             case 4:
                 room_report(patientList, report);
                 saveReportRoom("roomUtilReport.txt", *report);
+                printf("Successfully saved room usage report\n");
                 break;
             case 5:
                 printf("Returning...\n");

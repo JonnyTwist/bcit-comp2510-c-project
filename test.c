@@ -1,3 +1,12 @@
+/**
+ * Contains code that was used to speed up testing.
+ * Is not used while the program runs normally but it
+ * shows how we used code to test our code in some cases.
+ * @author Nicolas Bertrand
+ * @author Jonny Twist
+ * @version 1.0
+ */
+
 #include "list.h"
 #include "file_m.h"
 #include "patient.h"

@@ -56,7 +56,7 @@ void menu(){
         printf("4. Discharge Patient\n");
         printf("5. Manage Doctor Schedule\n");
         printf("6. View Discharged Patients\n");
-        printf("7. Restore previous Backup Data\n");
+        printf("7. Restore Previous Backup Data\n");
         printf("8. Open Report Menu\n");
         printf("9. Exit\n");
         printf("Enter your choice: ");
@@ -101,12 +101,19 @@ void menu(){
     } while (choice != 9);
 }
 
+/**
+ * Reads in the stored data when the program begins.
+ */
 void readStoredData()
 {
     loadPatientsInfo(PATIENT_FILE, &patientList, &dischargedPatientList);
     loadDsmInfo(DOCTOR_FILE, &doctor_list);
 }
 
+/**
+ * Saves all data when the program ends to both the frequent save files
+ * and the backup save files
+ */
 void backupData()
 {
     saveDsmInfo(DOCTOR_FILE, doctor_list);
@@ -116,9 +123,26 @@ void backupData()
     savePatientsInfo(PATIENT_FILE_BACKUP, patientList, dischargedPatientList);
 }
 
+/**
+ * Overwrites all changes in the current session with the
+ * backup save files effectively reverting to a previous save.
+ */
 void restoreToBackups()
 {
-    //todo ask for confirm before restoring backups
-    loadPatientsInfo(PATIENT_FILE_BACKUP, &patientList, &dischargedPatientList);
-    loadDsmInfo(DOCTOR_FILE_BACKUP, &doctor_list);
+    char input;
+
+    printf("Are you sure you want to restore from backups? This will overwrite all unsaved changes. (y/n): ");
+    scanf(" %c", &input);
+
+    if (input == 'y' || input == 'Y')
+    {
+        loadPatientsInfo(PATIENT_FILE_BACKUP, &patientList, &dischargedPatientList);
+        loadDsmInfo(DOCTOR_FILE_BACKUP, &doctor_list);
+        printf("Backups restored successfully.\n");
+    }
+    else
+    {
+        printf("Restore cancelled.\n");
+    }
+    emptyRemainingInput();
 }

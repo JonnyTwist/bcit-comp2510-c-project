@@ -1,6 +1,9 @@
-//
-// Created by maxym on 27/02/2025.
-//
+/**
+* Allows using the list.c file from other files
+ *@author Nicolas Bertrand
+ *@author Jonny Twist
+ *@version 1.0
+ */
 #include <stdio.h>
 
 #ifndef LIST_H
