@@ -27,7 +27,7 @@ typedef struct doc_use
 void room_report(struct list* patient_list, struct list** room_report);
 int discharged_in_day(struct list* patient_list, struct tm left, struct tm right);
 int admitted_in_mwd(struct list* patient_list, struct tm left, struct tm right);
-void doctor_report(struct list* doctor_list, struct list** doc_report);
+void doc_report(struct list** doc_report);
 int admitted_in_interval(struct list* patient_list, struct tm left, struct tm right);
 int discharged_in_interval(struct list* patient_list, struct tm left, struct tm right);
 void reportMenu();

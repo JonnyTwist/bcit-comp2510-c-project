@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "dsm.h"
+#include "file_m.h"
 
 int compTm(struct tm l, struct tm r);
 int contains_key(int key, struct list* kv_list);
@@ -31,13 +32,14 @@ void room_report(struct list* patient_list, struct list** room_report)
     }
 }
 
-void docReport(struct list** doc_report)
+void doc_report(struct list** doc_report)
 {
     for (int i = 0; i < DAYS_IN_WEEK; i++)
         for (int j = 0; j < SHIFTS_PER_DAY; j++)
         {
             if (contains_key(schedule[i][j], *doc_report))
             {
+                printf("here %d %d\n", i, j);
                 int value;
                 get_value(schedule[i][j], *doc_report, &value);
                 Key_value kv = {schedule[i][j], value + 1};
@@ -315,7 +317,10 @@ void reportMenu()
                 request_day(1, 0);
                 break;
             case 3:
-                //docReport(doctor_list, report);
+                doc_report(report);
+                printf("I have made it here");
+                saveReportDocUtil("doctorUtilReport.txt", *report);
+                printf("I have finished");
                 break;
             case 4:
                 room_report(patientList, report);

@@ -177,12 +177,19 @@ int saveReportDocUtil(const char* filename, struct list* doc_report)
     {
         Key_value kv = *(Key_value*)doc_report->elt;
         int index = docIdExists(doctor_list, (int)list_length(doctor_list),kv.key);
-        doctor d = *(doctor*)list_get(doctor_list, index);
+        printf("%d\n", index);
 
-        fprintf(file,"Doctor: %-20s Number of shifts: %d\n", d.name, kv.value);
+        if (index != -1)
+        {
+            doctor d = *(doctor*)list_get(doctor_list, index);
+
+            fprintf(file,"Doctor: %-20s Number of shifts: %d\n", d.name, kv.value);
+        }
 
         doc_report = doc_report->next;
     }
+
+    fclose(file);
 
     return 0;
 }
@@ -206,6 +213,8 @@ int saveReportRoom(const char* filename, struct list* room_report)
 
         room_report = room_report->next;
     }
+
+    fclose(file);
 
     return 0;
 }
