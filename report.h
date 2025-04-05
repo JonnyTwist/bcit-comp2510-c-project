@@ -30,5 +30,10 @@ int admitted_in_mwd(struct list* patient_list, struct tm left, struct tm right);
 void doctor_report(struct list* doctor_list, struct list** doc_report);
 int admitted_in_interval(struct list* patient_list, struct tm left, struct tm right);
 int discharged_in_interval(struct list* patient_list, struct tm left, struct tm right);
+void reportMenu();
+void prepareForPatientReport();
+void request_month(int option);
+void request_day(int intake, int option);
+struct tm createTime(int date, int month, int year);
 
 #endif //BCIT_COMP2510_C_PROJECT_REPORT_H

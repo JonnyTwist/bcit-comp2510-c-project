@@ -11,6 +11,7 @@
 #include "dsm.h"
 #include "list.h"
 #include "file_m.h"
+#include "report.h"
 
 //todo remove
 #include <time.h>
@@ -21,7 +22,7 @@ struct list* patientList;
 struct list* dischargedPatientList;
 struct list* doctor_list;
 int doctorCount = 0;
-int schedule[7][3];
+int schedule[DAYS_IN_WEEK][SHIFTS_PER_DAY];
 void menu();
 void readStoredData();
 void backupData();
@@ -32,11 +33,12 @@ void restoreToBackups();
  * @return 0
  */
 int main(void) {
-    //readStoredData();
-    //menu();
-    //backupData();
+    readStoredData();
+    menu();
+    backupData();
     //test();
-    test3();
+    //test3();
+
     return 0;
 }
 
@@ -55,8 +57,8 @@ void menu(){
         printf("5. Manage Doctor Schedule\n");
         printf("6. View Discharged Patients\n");
         printf("7. Restore previous Backup Data\n");
-        printf("8. Exit\n");
-        //todo add options for new features
+        printf("8. Open Report Menu\n");
+        printf("9. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         getchar(); //consume newline
@@ -87,13 +89,16 @@ void menu(){
                 restoreToBackups();
                 break;
             case 8:
+                reportMenu();
+                break;
+            case 9:
                 printf("Exiting...\n");
                 break;
             default:
                 printf("invalid choice! Try again.\n");
         }
 
-    } while (choice != 8);
+    } while (choice != 9);
 }
 
 void readStoredData()
