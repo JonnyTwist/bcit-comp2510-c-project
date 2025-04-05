@@ -177,7 +177,6 @@ int saveReportDocUtil(const char* filename, struct list* doc_report)
     {
         Key_value kv = *(Key_value*)doc_report->elt;
         int index = docIdExists(doctor_list, (int)list_length(doctor_list),kv.key);
-        printf("%d\n", index);
 
         if (index != -1)
         {
@@ -213,6 +212,24 @@ int saveReportRoom(const char* filename, struct list* room_report)
 
         room_report = room_report->next;
     }
+
+    fclose(file);
+
+    return 0;
+}
+
+int saveReportSpecific(const char* filename, const char* message)
+{
+    FILE* file = fopen(filename, "a");
+
+    if (file == NULL)
+    {
+        printf("Failed to open the %s file\n", filename);
+        return 1;
+    }
+
+    fprintf(file, "%s", message);
+    fprintf(file, "\n");
 
     fclose(file);
 

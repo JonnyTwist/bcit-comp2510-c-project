@@ -30,7 +30,6 @@ int docIdExists(struct list* doc_list, int size, int id) {
 }
 
 
-
 /**
  * Allows adding a doctor to the array of doctors.
  */
@@ -278,7 +277,7 @@ void printSchedule(){
  * @param newLength the new length of the String
  */
 void truncateStr(char str[], int newLength) {
-    if (newLength < strlen(str)) {
+    if (newLength < (int) strlen(str)) {
         str[newLength ] = '\0';
         str[newLength -1] = '.';
         str[newLength -2] = '.';

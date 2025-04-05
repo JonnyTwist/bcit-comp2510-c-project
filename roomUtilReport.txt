@@ -1,0 +1,4 @@
+Room utilisation:
+Room: 9            Number of patients: 1
+Room: 7            Number of patients: 2
+Room: 19           Number of patients: 1

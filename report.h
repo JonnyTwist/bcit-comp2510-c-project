@@ -35,5 +35,7 @@ void prepareForPatientReport();
 void request_month(int option);
 void request_day(int intake, int option);
 struct tm createTime(int date, int month, int year);
+void createMessage(char* message, int option, struct tm leftTime, struct tm rightTime, int count);
+
 
 #endif //BCIT_COMP2510_C_PROJECT_REPORT_H

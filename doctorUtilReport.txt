@@ -1,0 +1,4 @@
+Doctor utilisation:
+Doctor: Jason                Number of shifts: 1
+Doctor: Jeffery              Number of shifts: 2
+Doctor: Plato                Number of shifts: 1

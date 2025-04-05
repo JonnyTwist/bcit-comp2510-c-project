@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "dsm.h"
 #include "file_m.h"
+#include "string.h"
+#include "ctype.h"
 
 int compTm(struct tm l, struct tm r);
 int contains_key(int key, struct list* kv_list);
@@ -39,7 +41,6 @@ void doc_report(struct list** doc_report)
         {
             if (contains_key(schedule[i][j], *doc_report))
             {
-                printf("here %d %d\n", i, j);
                 int value;
                 get_value(schedule[i][j], *doc_report, &value);
                 Key_value kv = {schedule[i][j], value + 1};
@@ -136,8 +137,8 @@ int discharged_in_interval(struct list* patient_list, struct tm left, struct tm 
         patient p = *(patient*)patient_list->elt;
         struct tm p_time;
         p_time.tm_mday = p.date_discharged;
-        p_time.tm_mon = p.month_discharged;
-        p_time.tm_year = p.year_discharged;
+        p_time.tm_mon = p.month_discharged - 1;
+        p_time.tm_year = p.year_discharged - 1900;
 
         int dl = compTm(left,p_time);
         int dr = compTm(p_time, right);
@@ -165,8 +166,10 @@ int admitted_in_interval(struct list* patient_list, struct tm left, struct tm ri
         patient p = *(patient*)patient_list->elt;
         struct tm p_time;
         p_time.tm_mday = p.date_admitted;
-        p_time.tm_mon = p.month_admitted;
-        p_time.tm_year = p.year_admitted;
+        p_time.tm_mon = p.month_admitted - 1;
+        p_time.tm_year = p.year_admitted - 1900;
+
+        printf("%d-%d-%d\n", p_time.tm_mday, p_time.tm_mon, p_time.tm_year);
 
         int dl = compTm(left,p_time);
         int dr = compTm(p_time, right);
@@ -184,12 +187,73 @@ int compTm(struct tm l, struct tm r)
     int m_diff = l.tm_mon - r.tm_mon;
     int y_diff = l.tm_year - r.tm_year;
 
+    printf("d_diff: %d, m_diff: %d, y_diff: %d\n", d_diff, m_diff, y_diff);
+
     return y_diff*10000 + m_diff*100 + d_diff;
 }
 
 void request_month(int option)
 {
+    int year;
+    int month;
 
+    //todo fix this - it is failing to parse the string
+    printf("Enter a date in YYYY-MM format: ");
+    if (scanf("%d-%d", &year, &month) == 2)
+    {
+        char message[100];
+        message[0] = 0;
+
+        int returnedCount;
+
+        struct tm leftTime = createTime(1, month, year);
+        struct tm rightTime = createTime(1, month + 1, year);
+
+        returnedCount = admitted_in_interval(patientList, leftTime, rightTime);
+        createMessage(message, option, leftTime, rightTime, returnedCount);
+        saveReportSpecific("admittedReport.txt", message);
+    }
+    else
+    {
+        printf("Error parsing date string.\n");
+        emptyRemainingInput();
+    }
+
+}
+
+void createMessage(char* message, int option, struct tm leftTime, struct tm rightTime, int count)
+{
+    if (option == 0)
+    {
+        //discharged patients message
+        sprintf(message, "There were %d patients discharged on %d-%d-%d",
+            count, leftTime.tm_year + 1900, leftTime.tm_mon + 1, leftTime.tm_mday);
+    }
+    else if (option == 1)
+    {
+        //month message
+        sprintf(message, "There were %d patients admitted between %d-%d-%d and %d-%d-%d",
+            count, leftTime.tm_year + 1900, leftTime.tm_mon + 1, leftTime.tm_mday,
+            rightTime.tm_year + 1900, rightTime.tm_mon + 1, rightTime.tm_mday);
+
+    }
+    else if (option == 2)
+    {
+        //week message
+        sprintf(message, "There were %d patients admitted between %d-%d-%d and %d-%d-%d",
+            count, leftTime.tm_year + 1900, leftTime.tm_mon + 1, leftTime.tm_mday,
+            rightTime.tm_year + 1900, rightTime.tm_mon + 1, rightTime.tm_mday);
+    }
+    else if (option == 3)
+    {
+        //day message
+        sprintf(message, "There were %d patients admitted on %d-%d-%d",
+            count, leftTime.tm_year + 1900, leftTime.tm_mon + 1, leftTime.tm_mday);
+    }
+    else
+    {
+        printf("UNREACHABLE CODE REACHED!!!");
+    }
 }
 
 void request_day(int intake, int option)
@@ -197,16 +261,15 @@ void request_day(int intake, int option)
     int year;
     int month;
     int day;
-    char dateStr[10];
 
     //todo fix this - it is failing to parse the string
     printf("Enter a date in YYYY-MM-DD format: ");
-
-    if (scanf(dateStr, "%d-%d-%d", &year, &month, &day) == 3)
+    if (scanf("%d-%d-%d", &year, &month, &day) == 3)
     {
-        printf("Year: %d\n", year);
-        printf("Month: %d\n", month);
-        printf("Day: %d\n", day);
+        char message[100];
+        message[0] = 0;
+
+        int returnedCount;
 
         struct tm leftTime = createTime(day, month, year);
 
@@ -214,6 +277,9 @@ void request_day(int intake, int option)
         {
             //if intake is 1 we are generating a discharged patient report
             //todo call something like admitted_in_interval
+            returnedCount = discharged_in_interval(dischargedPatientList, leftTime, leftTime);
+            createMessage(message, option, leftTime, leftTime, returnedCount);
+            saveReportSpecific("dischargedReport.txt", message);
         }
         else if (intake == 2)
         {
@@ -231,13 +297,16 @@ void request_day(int intake, int option)
                 struct tm *rightTime = localtime(&date_time);
 
                 //todo catch the return value and print it
-                admitted_in_interval(patientList, leftTime, *rightTime);
-
+                returnedCount = admitted_in_interval(patientList, leftTime, *rightTime);
+                createMessage(message, option, leftTime, *rightTime, returnedCount);
+                saveReportSpecific("admittedReport.txt", message);
             }
             else if (option == 3)
             {
                 //todo catch the number of stuff admitted patients and print that to file
-                admitted_in_interval(patientList, leftTime, leftTime);
+                returnedCount = admitted_in_interval(patientList, leftTime, leftTime);
+                createMessage(message, option, leftTime, leftTime, returnedCount);
+                saveReportSpecific("admittedReport.txt", message);
             }
         }
         else
@@ -248,6 +317,7 @@ void request_day(int intake, int option)
     else
     {
         printf("Error parsing date string.\n");
+        emptyRemainingInput();
     }
 }
 
@@ -318,12 +388,11 @@ void reportMenu()
                 break;
             case 3:
                 doc_report(report);
-                printf("I have made it here");
                 saveReportDocUtil("doctorUtilReport.txt", *report);
-                printf("I have finished");
                 break;
             case 4:
                 room_report(patientList, report);
+                saveReportRoom("roomUtilReport.txt", *report);
                 break;
             case 5:
                 printf("Returning...\n");

@@ -1,0 +1,8 @@
+There were 0 patients admitted on 2025-4-3
+There were 0 patients admitted on 2025-4-4
+There were 0 patients admitted between 2025-4-2 and 2025-4-9
+There were 0 patients admitted on 2025-4-4
+There were 0 patients admitted on 2025-4-4
+There were 1 patients admitted on 2025-4-4
+There were 1 patients admitted between 2025-4-2 and 2025-4-9
+There were 3 patients admitted between 2025-4-1 and 2025-5-1
