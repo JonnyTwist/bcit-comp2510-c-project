@@ -115,9 +115,14 @@
      while(*test_list)
      {
          list_print(*test_list);
-         printf(" -> %d\n", *(int*)list_pop_front(test_list));
+         int* elt = (int*)list_pop_front(test_list);
+         printf(" -> %d\n", *elt);
+         free(elt);
      }
      list_print(*test_list);
+
+     list_clear(test_list);
+     free(test_list);
  }
 
  void print_patient(struct list* ps)
@@ -163,6 +168,9 @@
      printf("------------------------\n");
      loadPatientsInfo(filename, patient_list, NULL);
      print_patient(*patient_list);
+
+     list_clear(patient_list);
+     free(patient_list);
  }
 
 void test3()
