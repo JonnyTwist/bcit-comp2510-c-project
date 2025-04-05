@@ -156,7 +156,7 @@ int list_remove_at(struct list** list, size_t index)
 
     if (index == 0)
     {
-        list_pop_front(list);
+        free(list_pop_front(list));
         return 0;
     }
 
