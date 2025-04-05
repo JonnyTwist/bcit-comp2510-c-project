@@ -1,5 +1,6 @@
 #include "report.h"
 #include "patient.h"
+#include "dsm.h"
 #include <string.h>
 
 int compTm(struct tm l, struct tm r);
@@ -26,6 +27,26 @@ void room_report(struct list* patient_list, struct list** room_report)
         }
         patient_list = patient_list->next;
     }
+}
+
+void docReport(struct list** doc_report)
+{
+    for (int i = 0; i < DAYS_IN_WEEK; i++)
+        for (int j = 0; j < SHIFTS_PER_DAY; j++)
+        {
+            if (contains_key(schedule[i][j], *doc_report))
+            {
+                int value;
+                get_value(schedule[i][j], *doc_report, &value);
+                Key_value kv = {schedule[i][j], value + 1};
+                put(kv, doc_report);
+            }
+            else
+            {
+                Key_value kv = {schedule[i][j], 1};
+                put(kv, doc_report);
+            }
+        }
 }
 
 void put(Key_value kv, struct list** kv_list)

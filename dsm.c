@@ -29,6 +29,8 @@ int docIdExists(struct list* doc_list, int size, int id) {
     return ID_NOT_FOUND;
 }
 
+
+
 /**
  * Allows adding a doctor to the array of doctors.
  */

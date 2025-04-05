@@ -1,0 +1,21 @@
+Room utilisation:
+Room: 5            Number of patients: 3
+Room: 1            Number of patients: 15
+Room: 2            Number of patients: 5
+Room: 10           Number of patients: 11
+Room: 8            Number of patients: 7
+Room: 0            Number of patients: 10
+Room: 17           Number of patients: 8
+Room: 9            Number of patients: 11
+Room: 18           Number of patients: 11
+Room: 12           Number of patients: 5
+Room: 14           Number of patients: 12
+Room: 7            Number of patients: 9
+Room: 15           Number of patients: 9
+Room: 16           Number of patients: 11
+Room: 11           Number of patients: 13
+Room: 4            Number of patients: 14
+Room: 3            Number of patients: 10
+Room: 19           Number of patients: 10
+Room: 6            Number of patients: 9
+Room: 13           Number of patients: 17

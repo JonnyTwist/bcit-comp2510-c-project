@@ -199,6 +199,7 @@ void test3()
 
     room_report(*patients, report);
     print_report(*report);
+    saveReportRoom("../testroomreport.txt", *report);
     list_clear(report);
     list_clear(patients);
     free(report);

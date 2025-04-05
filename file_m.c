@@ -3,6 +3,7 @@
 #include "patient.h"
 #include "dsm.h"
 #include <time.h>
+#include "report.h"
 
 /**
  * Saves the patient information and discharged patient information to a file.
@@ -158,5 +159,53 @@ int loadDsmInfo(const char* filename, struct list** doctors)
 
     fclose(file);
     doctorCount = (int) doctorsLength;
+    return 0;
+}
+
+int saveReportDocUtil(const char* filename, struct list* doc_report)
+{
+    FILE* file = fopen(filename, "w");
+
+    if (file == NULL)
+    {
+        printf("Failed to open the %s file\n", filename);
+        return 1;
+    }
+
+    fprintf(file, "Doctor utilisation:\n");
+    while (doc_report)
+    {
+        Key_value kv = *(Key_value*)doc_report->elt;
+        int index = docIdExists(doctor_list, (int)list_length(doctor_list),kv.key);
+        doctor d = *(doctor*)list_get(doctor_list, index);
+
+        fprintf(file,"Doctor: %-20s Number of shifts: %d\n", d.name, kv.value);
+
+        doc_report = doc_report->next;
+    }
+
+    return 0;
+}
+
+int saveReportRoom(const char* filename, struct list* room_report)
+{
+    FILE* file = fopen(filename, "w");
+
+    if (file == NULL)
+    {
+        printf("Failed to open the %s file\n", filename);
+        return 1;
+    }
+
+    fprintf(file, "Room utilisation:\n");
+    while (room_report)
+    {
+        Key_value kv = *(Key_value*)room_report->elt;
+
+        fprintf(file,"Room: %-12d Number of patients: %d\n", kv.key, kv.value);
+
+        room_report = room_report->next;
+    }
+
     return 0;
 }
