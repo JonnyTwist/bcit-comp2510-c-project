@@ -3,16 +3,19 @@
 #include "dsm.h"
 #include <string.h>
 #include <stdlib.h>
-#include "dsm.h"
 #include "file_m.h"
-#include "string.h"
-#include "ctype.h"
 
 int compTm(struct tm l, struct tm r);
 int contains_key(int key, struct list* kv_list);
 int get_value(int key, struct list* kv_list, int* value);
 void put(Key_value kv, struct list** kv_list);
 
+/**
+ * Generates a report of room usage by counting how many patients are assigned to each room.
+ * @param patient_list A pointer to the head of a linked list containing patients.
+ * @param room_report A pointer to a linked list that will be populated with Key_value elements,
+ * where each key is a room number and each value is the number of patients in that room.
+ */
 void room_report(struct list* patient_list, struct list** room_report)
 {
     while (patient_list)
@@ -34,6 +37,11 @@ void room_report(struct list* patient_list, struct list** room_report)
     }
 }
 
+/**
+ * Generates a report of how many times each doctor appears in the schedule across all shifts of the week.
+ * @param doc_report A pointer to a linked list that will be populated with Key_value elements,
+ * where each key is a doctor ID and each value is the number of shifts assigned to that doctor.
+ */
 void doc_report(struct list** doc_report)
 {
     for (int i = 0; i < DAYS_IN_WEEK; i++)
@@ -54,6 +62,11 @@ void doc_report(struct list** doc_report)
         }
 }
 
+/**
+ * Inserts a key-value pair into a list. If the key already exists, updates the value.
+ * @param kv The Key_value struct containing the key and value to insert or update.
+ * @param kv_list A double pointer to the head of the linked list storing Key_value elements.
+ */
 void put(Key_value kv, struct list** kv_list)
 {
     if (kv_list == NULL)
@@ -84,6 +97,12 @@ void put(Key_value kv, struct list** kv_list)
     }
 }
 
+/**
+ * Checks whether a given key exists in the linked list.
+ * @param key The key to search for.
+ * @param kv_list A pointer to the head of the linked list of Key_value elements.
+ * @return 1 if the key exists in the list, 0 otherwise.
+ */
 int contains_key(int key, struct list* kv_list)
 {
     int res = 0;
@@ -97,12 +116,12 @@ int contains_key(int key, struct list* kv_list)
     return res;
 }
 
-/*
+/**
  * returns 1 if the has been found else returns 0
- * @param key
- * @param kv_list
+ * @param key the key to search for.
+ * @param kv_list the list to be searched through.
  * @param value where the value will be stored
- * @return
+ * @return 1 if the key is found and the value is set. Else 0.
  */
 int get_value(int key, struct list* kv_list, int* value)
 {
@@ -181,6 +200,12 @@ int admitted_in_interval(struct list* patient_list, struct tm left, struct tm ri
     return count;
 }
 
+/**
+ * Compares two struct tm dates.
+ * @param l The first date.
+ * @param r The second date.
+ * @return A positive value if l is later than r, negative if l is earlier, and 0 if equal.
+ */
 int compTm(struct tm l, struct tm r)
 {
     int d_diff = l.tm_mday - r.tm_mday;
@@ -192,12 +217,16 @@ int compTm(struct tm l, struct tm r)
     return y_diff*10000 + m_diff*100 + d_diff;
 }
 
+/**
+ * Prompts the user to enter a date in YYYY-MM format. If valid, it computes how many patients
+ * were admitted in that month, creates a formatted message, and saves it to "admittedReport.txt".
+ * @param option An integer option used in message creation (to customize the report content).
+ */
 void request_month(int option)
 {
     int year;
     int month;
 
-    //todo fix this - it is failing to parse the string
     printf("Enter a date in YYYY-MM format: ");
     if (scanf("%d-%d", &year, &month) == 2)
     {
@@ -218,9 +247,23 @@ void request_month(int option)
         printf("Error parsing date string.\n");
         emptyRemainingInput();
     }
-
 }
 
+/**
+ * Creates a formatted message describing the number of patients admitted or discharged.
+ *
+ * The format of the message depends on the value of the option parameter:
+ * - 0: Discharged patients on a specific date.
+ * - 1: Admitted patients in a month.
+ * - 2: Admitted patients over a week.
+ * - 3: Admitted patients on a specific date.
+ *
+ * @param message The character pointer where the message will be stored.
+ * @param option An integer indicating the report type.
+ * @param leftTime The start date (or the only date, depending on option).
+ * @param rightTime The end date (ignored for single-day reports).
+ * @param count The number of patients for the report.
+ */
 void createMessage(char* message, int option, struct tm leftTime, struct tm rightTime, int count)
 {
     if (option == 0)
@@ -256,13 +299,18 @@ void createMessage(char* message, int option, struct tm leftTime, struct tm righ
     }
 }
 
+/**
+ * Prompts the user to enter a date in YYYY-MM-DD format and generates a report.
+ * The report is saved to "dischargedReport.txt" or "admittedReport.txt" accordingly.
+ * @param intake Indicates the report type (1 = discharged, 2 = admitted).
+ * @param option Report granularity for admitted patients (2 = week, 3 = day).
+ */
 void request_day(int intake, int option)
 {
     int year;
     int month;
     int day;
 
-    //todo fix this - it is failing to parse the string
     printf("Enter a date in YYYY-MM-DD format: ");
     if (scanf("%d-%d-%d", &year, &month, &day) == 3)
     {
@@ -276,7 +324,6 @@ void request_day(int intake, int option)
         if (intake == 1)
         {
             //if intake is 1 we are generating a discharged patient report
-            //todo call something like admitted_in_interval
             returnedCount = discharged_in_interval(dischargedPatientList, leftTime, leftTime);
             createMessage(message, option, leftTime, leftTime, returnedCount);
             saveReportSpecific("dischargedReport.txt", message);
@@ -296,14 +343,12 @@ void request_day(int intake, int option)
                 // Convert back to struct tm
                 struct tm *rightTime = localtime(&date_time);
 
-                //todo catch the return value and print it
                 returnedCount = admitted_in_interval(patientList, leftTime, *rightTime);
                 createMessage(message, option, leftTime, *rightTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
             }
             else if (option == 3)
             {
-                //todo catch the number of stuff admitted patients and print that to file
                 returnedCount = admitted_in_interval(patientList, leftTime, leftTime);
                 createMessage(message, option, leftTime, leftTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
@@ -321,6 +366,13 @@ void request_day(int intake, int option)
     }
 }
 
+/**
+ * Creates and returns a struct tm representing the given date.
+ * @param date The day of the month.
+ * @param month The month.
+ * @param year The full year.
+ * @return A struct tm representing the specified date.
+ */
 struct tm createTime(int date, int month, int year)
 {
     struct tm newTime = {0};
@@ -332,6 +384,14 @@ struct tm createTime(int date, int month, int year)
     return newTime;
 }
 
+/**
+ * Handles user input for selecting a time span
+ * and generates a corresponding report for admitted patients.
+ *
+ * The function loops until the user chooses to cancel (option 4).
+ * Depending on the user's selection, it calls `request_month` or `request_day`
+ * with appropriate parameters.
+ */
 void prepareForPatientReport()
 {
     int choice;
@@ -362,6 +422,10 @@ void prepareForPatientReport()
     } while (choice != 4);
 }
 
+/**
+ * Displays the main report generation menu and takes user input.
+ * Loops until the user enters 5
+ */
 void reportMenu()
 {
     struct list** report = malloc(sizeof(struct list*));

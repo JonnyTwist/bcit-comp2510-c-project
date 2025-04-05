@@ -162,6 +162,13 @@ int loadDsmInfo(const char* filename, struct list** doctors)
     return 0;
 }
 
+/**
+ * Writes doctor utilization statistics to a text file.
+ * Each line includes the doctor’s name and the number of shifts assigned.
+ * @param filename The file to write to.
+ * @param doc_report A list of Key_value structs containing doctor ID and shift count.
+ * @return 0 on success, 1 on failure to open the file.
+ */
 int saveReportDocUtil(const char* filename, struct list* doc_report)
 {
     FILE* file = fopen(filename, "w");
@@ -193,6 +200,13 @@ int saveReportDocUtil(const char* filename, struct list* doc_report)
     return 0;
 }
 
+/**
+ * Writes room utilization statistics to a text file.
+ * Each line includes a room number and the number of patients assigned.
+ * @param filename The file to write to.
+ * @param room_report A list of Key_value structs with room number and usage count.
+ * @return 0 on success, 1 on failure to open the file.
+ */
 int saveReportRoom(const char* filename, struct list* room_report)
 {
     FILE* file = fopen(filename, "w");
@@ -218,6 +232,12 @@ int saveReportRoom(const char* filename, struct list* room_report)
     return 0;
 }
 
+/**
+ * Appends a specified message to a specified report file.
+ * @param filename The file to append to.
+ * @param message The string message to write.
+ * @return 0 on success, 1 on failure to open the file.
+ */
 int saveReportSpecific(const char* filename, const char* message)
 {
     FILE* file = fopen(filename, "a");
