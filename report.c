@@ -464,12 +464,12 @@ void reportMenu()
             case 3:
                 doc_report(report);
                 saveReportDocUtil("doctorUtilReport.txt", *report);
-                printf("Successfully saved doctor utilization report\n");
+                //printf("Successfully saved doctor utilization report\n");
                 break;
             case 4:
                 room_report(patientList, report);
                 saveReportRoom("roomUtilReport.txt", *report);
-                printf("Successfully saved room usage report\n");
+                //printf("Successfully saved room usage report\n");
                 break;
             case 5:
                 printf("Returning...\n");

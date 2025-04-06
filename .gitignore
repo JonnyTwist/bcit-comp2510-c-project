@@ -22,3 +22,7 @@ doctorsDataBackup.bin
 doctorsData.bin
 patientDataBackup.bin
 patientData.bin
+admittedReport.txt
+dischargedReport.txt
+roomUtilReport.txt
+doctorUtilReport.txt

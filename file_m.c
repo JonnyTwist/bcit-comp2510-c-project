@@ -180,6 +180,7 @@ int saveReportDocUtil(const char* filename, struct list* doc_report)
     }
 
     fprintf(file, "Doctor utilisation:\n");
+    printf("\nDoctor utilisation:\n");
     while (doc_report)
     {
         Key_value kv = *(Key_value*)doc_report->elt;
@@ -190,6 +191,7 @@ int saveReportDocUtil(const char* filename, struct list* doc_report)
             doctor d = *(doctor*)list_get(doctor_list, index);
 
             fprintf(file,"Doctor: %-20s Number of shifts: %d\n", d.name, kv.value);
+            printf("Doctor: %-20s Number of shifts: %d\n", d.name, kv.value);
         }
 
         doc_report = doc_report->next;
@@ -218,11 +220,13 @@ int saveReportRoom(const char* filename, struct list* room_report)
     }
 
     fprintf(file, "Room utilisation:\n");
+    printf("\nRoom utilisation:\n");
     while (room_report)
     {
         Key_value kv = *(Key_value*)room_report->elt;
 
         fprintf(file,"Room: %-12d Number of patients: %d\n", kv.key, kv.value);
+        printf("Room: %-12d Number of patients: %d\n", kv.key, kv.value);
 
         room_report = room_report->next;
     }
