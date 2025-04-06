@@ -296,6 +296,7 @@ void request_month(int option)
         returnedCount += admitted_in_interval(dischargedPatientList, leftTime, rightTime);
         createMessage(message, option, leftTime, rightTime, returnedCount);
         saveReportSpecific("admittedReport.txt", message);
+        printf("%s\n", message);
     }
     else
     {
@@ -332,6 +333,7 @@ void request_day(int intake, int option)
             returnedCount = discharged_in_interval(dischargedPatientList, leftTime, leftTime);
             createMessage(message, option, leftTime, leftTime, returnedCount);
             saveReportSpecific("dischargedReport.txt", message);
+            printf("%s\n", message);
         }
         else if (intake == 2)
         {
@@ -352,6 +354,7 @@ void request_day(int intake, int option)
                 returnedCount += admitted_in_interval(dischargedPatientList, leftTime, *rightTime);
                 createMessage(message, option, leftTime, *rightTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
+                printf("%s\n", message);
             }
             else if (option == 3)
             {
@@ -359,6 +362,7 @@ void request_day(int intake, int option)
                 returnedCount += admitted_in_interval(dischargedPatientList, leftTime, leftTime);
                 createMessage(message, option, leftTime, leftTime, returnedCount);
                 saveReportSpecific("admittedReport.txt", message);
+                printf("%s\n", message);
             }
         }
         else
